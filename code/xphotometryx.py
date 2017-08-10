@@ -156,7 +156,7 @@ def assign_season(df):
     return df
 
 
-def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), savefig_file='../results/Anon1.pdf', ylabel='$V$'):
+def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), savefig_file='../results/test.pdf', ylabel='$V$'):
     '''
     Plots all the available seasons of photometry in phase-folded postage stamps.
     '''
@@ -292,3 +292,29 @@ def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), sa
             ax.set_xlabel('phase')
 
     plt.savefig(savefig_file, bbox_inches='tight')
+
+
+
+def master_flat_photometry():
+    '''
+    Automatically generate a flat file for all targets and all photometry
+    '''
+    fn_df = pd.read_csv('../data/metadata/photometry_filenames.csv')
+
+    for i in fn_df.index:
+        gr_data = flat_grankin08('../data/Grankin_2008/'+fn_df.Grankin08_fn[i])
+        ASASSN_data = flat_ASASSN('../data/ASASSN/'+fn_df.ASASSN_fn[i])
+        master = pd.concat([gr_data, ASASSN_data], join='outer', ignore_index=True, axis=0)
+        master['year'], master['month'], master['day'] = jd_to_date(master.JD_like.values)
+        master = assign_season(master)
+        col_order = ['JD_like', 'year', 'month', 'day', 'season',
+                    'Vmag', 'Verr', 'Bmag', 'Berr', 'Rmag', 'Rerr', 'Umag', 'Uerr',
+                     'source', 'date_type']
+        master = master[col_order]
+        master.Verr[master.Vmag != master.Vmag] = np.NaN
+        master.Rerr[master.Rmag != master.Rmag] = np.NaN
+        master.Berr[master.Bmag != master.Bmag] = np.NaN
+        master.Uerr[master.Umag != master.Umag] = np.NaN
+        master.to_csv('../data/flat_photometry/'+fn_df.master_fn[i], index=False)
+
+    return 0
