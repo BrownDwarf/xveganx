@@ -156,7 +156,7 @@ def assign_season(df):
     return df
 
 
-def plot_season_postage_stamps(master, season_agg, ylim=(13.7, 13.3), savefig_file='../results/Anon1.pdf', ylabel='$V$'):
+def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), savefig_file='../results/Anon1.pdf', ylabel='$V$'):
     '''
     Plots all the available seasons of photometry in phase-folded postage stamps.
     '''
@@ -258,6 +258,22 @@ def plot_season_postage_stamps(master, season_agg, ylim=(13.7, 13.3), savefig_fi
         ax.errorbar(phased_t, y, dy, fmt='.k', ecolor='gray',
                     lw=1, ms=4, capsize=1.5)
         #------------
+
+        #---Mark observation epochs---
+        ts_ids = (np.float(s) == epochs.AdoptedSeason)
+        if ts_ids.sum() > 0:
+            for ei in epochs.index.values[ts_ids.values]:
+                this_phase = np.mod(epochs.JD_like[ei], this_P)/this_P
+                ax.vlines(this_phase, 15.3, 10.2, linestyles=epochs.linestyles[ei],
+                          colors=epochs.color[ei], alpha=0.8)
+                for band, model in [('V_est', modelV), ('R_est', modelR), ('B_est', modelB)]:
+                    try:
+                        estimated_mag = model.predict(this_phase*this_P, period=this_P).tolist()
+                        epochs.set_value(ei, band, estimated_mag)
+                    except:
+                        pass
+                        #print('{}: Band {} could not be computed'.format(epochs.Observation[ei], band))
+        #-----------------------------
 
         ax.yaxis.set_major_locator(plt.MaxNLocator(4))
         ax.set_ylim(ylim)
