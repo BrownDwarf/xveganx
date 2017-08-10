@@ -295,7 +295,7 @@ def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), sa
 
 
 
-def master_flat_photometry():
+def flatten_photometry():
     '''
     Automatically generate a flat file for all targets and all photometry
     '''
@@ -318,3 +318,18 @@ def master_flat_photometry():
         master.to_csv('../data/flat_photometry/'+fn_df.master_fn[i], index=False)
 
     return 0
+
+
+def master_photometry():
+    '''
+    Return a DataFrame with all photometry of all objects from all sources
+    '''
+    fn_df = pd.read_csv('../data/metadata/photometry_filenames.csv')
+
+    master = pd.DataFrame()
+    for i in fn_df.index:
+        this_master = pd.read_csv('../data/flat_photometry/'+fn_df.master_fn[i])
+        this_master['object'] = fn_df.name[i]
+        master = master.append(this_master, ignore_index=True)
+
+    return master
