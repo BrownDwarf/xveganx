@@ -4,30 +4,48 @@
 
 Tasks:
 
-### Photometry
-- [ ] Retrieve ASASSN photometry
-- [ ] Retrieve Grankin08 photometry
+### Spectroscopy metadata [#1](https://github.com/BrownDwarf/xveganx/issues/1)
+- [ ] Mine the IGRINS fits header tables into a table [01.01](./01.01-IGRINS_FITS_header_table.ipynb)
+- [ ] Construct epochs.csv containing acquisition dates of all spectra [01.02]()
+
+### Photometry analysis [#2](https://github.com/BrownDwarf/xveganx/issues/2)
+- [ ] Compile all photometry into flat tables
+
+### Photometry [#4](https://github.com/BrownDwarf/xveganx/issues/4)
+- [ ] Retrieve ASASSN photometry [04.01](04.01-Retrieve_ASASSN_data.ipynb)
+- [ ] Retrieve Grankin08 photometry [04.02](04.02-Retrieve_Grankin_data.ipynb)
+- [ ] Exploratory analysis of ASASSN data
 - [ ] Retrieve ASAS3 photometry
 - [ ] Retrieve AAVSO photometry
 - [ ] Retrieve Integral-OMC photometry
 - [ ] Research/add any ancillary data sources
 
-### Photometry analysis
-- [ ] Compile all photometry into flat tables
 
-### Stellar parameter estimates
+### Stellar parameter estimates [#5](https://github.com/BrownDwarf/xveganx/issues/5)
 - [ ] Compile a table of previous estimates of stellar parameters
 
-### Spectroscopy
-- [ ] Construct epochs.csv containing acquisition dates of spectra
+### Spectroscopy [#6](https://github.com/BrownDwarf/xveganx/issues/6)
 - [ ] Make sure spectra are telluric corrected
 - [ ] Construct and spotcheck the variance arrays
 - [ ] Put spectra into the HDF5 format needed
 
-### Generate config.yaml files
+### Generate config.yaml files [#7](https://github.com/BrownDwarf/xveganx/issues/7)
 - [ ] Define environment variables
 - [ ] Decide whether to do this automated, or semi-automated?
 
-### K2
+### K2? [#8](https://github.com/BrownDwarf/xveganx/issues/8)
 - [ ] Check to see if any sources have K2 campaign 13 photometry available
 - [ ] K2 photometry analysis, if available
+
+### Run Starfish grid and PCA jobs, and pre-processing [#9](https://github.com/BrownDwarf/xveganx/issues/9)
+- [ ] Pilot programs to assess run-time and debug
+- [ ] Establish way of tracking metadata of jobs
+- [ ] Run the jobs
+- [ ] Copy-over files where necessary
+
+### Run customized Starfish star_mix.py jobs [#10](https://github.com/BrownDwarf/xveganx/issues/10)
+- [ ] Pilot programs to assess run-time and debug
+- [ ] Establish way of tracking metadata of jobs
+- [ ] Spot-check outcomes
+- [ ] Run the jobs
+- [ ] Copy-over files where necessary
