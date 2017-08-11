@@ -333,3 +333,39 @@ def master_photometry():
         master = master.append(this_master, ignore_index=True)
 
     return master
+
+
+def seasonal_aggregation(master, target_name):
+    '''
+    Return a seasonally aggregated stats, given a target name and master df
+    '''
+    master = master[master.object == target_name].reset_index(drop=True)
+    gb = master.groupby('season')
+    df_season = pd.DataFrame()
+
+    for band in 'UBVR':
+        df_season['N_'+band] = gb[band+'mag'].count()
+
+    df_season['JD_min'] = gb.JD_like.min()
+    df_season['JD_max'] = gb.JD_like.max()
+    df_season['length'] = np.ceil(df_season.JD_max-df_season.JD_min)
+    df_season['years'] = ''
+
+    for i in range(len(df_season)):
+        # get the data and best-fit angular frequency
+        s = df_season.index[i]
+        ids = master.season == s
+        df = master[ids]
+        val_out= "{}/{}-{}/{}".format(df.month[df.JD_like.argmin()],
+                                      df.year.min(),
+                                      df.month[df.JD_like.argmax()],
+                                      df.year.max())
+        df_season.set_value(s, 'years', val_out)
+
+    g08_period = pd.read_csv('../data/metadata/Grankin08_physical.csv', usecols=['name', 'Period'])
+    period_days, = g08_period.Period[g08_period.name == target_name].values
+    df_season['P_est1'] = period_days
+    df_season['P_err1'] = 0.1
+    df_season.reset_index(inplace=True)
+
+    return df_season
