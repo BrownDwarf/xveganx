@@ -5,15 +5,18 @@
 Tasks:
 
 ### Spectroscopy metadata [#1](https://github.com/BrownDwarf/xveganx/issues/1)
-- [ ] Mine the IGRINS fits header tables into a table [01.01](./01.01-IGRINS_FITS_header_table.ipynb)
+- [x] Mine the IGRINS fits header tables into a table [01.01](./01.01-IGRINS_FITS_header_table.ipynb)
 - [ ] Construct epochs.csv containing acquisition dates of all spectra [01.02]()
 
 ### Photometry analysis [#2](https://github.com/BrownDwarf/xveganx/issues/2)
-- [ ] Compile all photometry into flat tables
+- [x] Compile all photometry into flat tables
+- [x] Compile Grankin08 periods into easy-to-use table
+- [x] Compute Seasonally aggregated statistics
+- [ ] Make a figure of postage stamps for all objects and seasons possessing IGRINS spectra.
 
 ### Photometry [#4](https://github.com/BrownDwarf/xveganx/issues/4)
-- [ ] Retrieve ASASSN photometry [04.01](04.01-Retrieve_ASASSN_data.ipynb)
-- [ ] Retrieve Grankin08 photometry [04.02](04.02-Retrieve_Grankin_data.ipynb)
+- [x] Retrieve ASASSN photometry [04.01](04.01-Retrieve_ASASSN_data.ipynb)
+- [x] Retrieve Grankin08 photometry [04.02](04.02-Retrieve_Grankin_data.ipynb)
 - [ ] Exploratory analysis of ASASSN data
 - [ ] Retrieve ASAS3 photometry
 - [ ] Retrieve AAVSO photometry
@@ -34,7 +37,7 @@ Tasks:
 - [ ] Decide whether to do this automated, or semi-automated?
 
 ### K2? [#8](https://github.com/BrownDwarf/xveganx/issues/8)
-- [ ] Check to see if any sources have K2 campaign 13 photometry available
+- [x] Check to see if any sources have K2 campaign 13 photometry available
 - [ ] K2 photometry analysis, if available
 
 ### Run Starfish grid and PCA jobs, and pre-processing [#9](https://github.com/BrownDwarf/xveganx/issues/9)
