@@ -40,7 +40,7 @@ import shutil
 import json
 
 from star_base import Order as OrderBase
-from star_base import SampleThetaPhi as SampleThetaPhiBase 
+from star_base import SampleThetaPhi as SampleThetaPhiBase
 
 Starfish.routdir = ""
 
@@ -58,8 +58,55 @@ logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s -  %(message)
     Starfish.routdir), level=logging.DEBUG, filemode="w", datefmt='%m/%d/%Y %I:%M:%S %p')
 
 class Order(OrderBase):
-    pass #put custom behavior here
 
+    def initialize(self, key):
+        OrderBase.initialize(self, key)
+        self.flux_scalar2 = None
+        self.mus2, self.C_GP2 = None, None
+        self.Omega2 = None
+
+    def evaluate(self):
+        '''
+        Return the lnprob using the current version of the C_GP matrix, data matrix,
+        and other intermediate products.
+        '''
+
+        self.lnprob_last = self.lnprob
+
+        X = (self.chebyshevSpectrum.k * self.flux_std * np.eye(self.ndata)).dot(self.eigenspectra.T)
+
+        part1 = self.Omega**2 * self.flux_scalar**2 * X.dot(self.C_GP.dot(X.T))
+        part2 = self.Omega2**2 * self.flux_scalar2**2 * X.dot(self.C_GP2.dot(X.T))
+        part3 = self.data_mat
+
+        #CC = X.dot(self.C_GP.dot(X.T)) + self.data_mat
+        CC = part1 + part2 + part3
+
+        try:
+            factor, flag = cho_factor(CC)
+        except np.linalg.linalg.LinAlgError:
+            print("Spectrum:", self.spectrum_id, "Order:", self.order)
+            self.CC_debugger(CC)
+            raise
+
+        try:
+            model1 = self.Omega * self.flux_scalar *(self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus))
+            model2 = self.Omega2 * self.flux_scalar2 * (self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus2))
+            net_model = model1 + model2
+            R = self.fl - net_model
+
+            logdet = np.sum(2 * np.log((np.diag(factor))))
+            self.lnprob = -0.5 * (np.dot(R, cho_solve((factor, flag), R)) + logdet)
+
+            self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
+            return self.lnprob
+
+    def update_Theta(self, p):
+        OrderBase.update_Theta(self, p)
+        self.emulator.params = np.append(p.teff2, p.grid[1:])
+        self.mus2, self.C_GP2 = self.emulator.matrix
+        self.flux_scalar2 = self.emulator.absolute_flux
+        self.Omega2 = 10**p.logOmega2
 
 class SampleThetaPhi(SampleThetaPhiBase):
     pass #put custom behavior here
@@ -114,7 +161,7 @@ phi0 = PhiParam.load(fname)
 
 ndim, nwalkers = 11, 40
 
-p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"]] + 
+p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"]] +
              phi0.cheb.tolist() + [phi0.sigAmp, phi0.logAmp, phi0.l])
 
 p0_std = [5, 0.02, 0.5, 0.5, 0.01, 0.005, 0.005, 0.005, 0.01, 0.001, 0.5]
@@ -132,8 +179,8 @@ nsteps = args.samples
 ninc = args.incremental_save
 for i, (pos, lnp, state) in enumerate(sampler.sample(p0_ball, iterations=nsteps)):
     if (i+1) % ninc == 0:
-        time.ctime() 
-        t_out = time.strftime('%Y %b %d,%l:%M %p') 
+        time.ctime()
+        t_out = time.strftime('%Y %b %d,%l:%M %p')
         print("{0}: {1:}/{2:} = {3:.1f}%".format(t_out, i, nsteps, 100 * float(i) / nsteps))
         np.save('temp_emcee_chain.npy',sampler.chain)
 
