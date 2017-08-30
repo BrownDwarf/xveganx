@@ -101,6 +101,12 @@ class Order(OrderBase):
             self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
             return self.lnprob
 
+        # To give us some debugging information about what went wrong.
+        except np.linalg.linalg.LinAlgError:
+            print("Spectrum:", self.spectrum_id, "Order:", self.order)
+            raise
+
+
     def update_Theta(self, p):
         OrderBase.update_Theta(self, p)
         self.emulator.params = np.append(p.teff2, p.grid[1:])
@@ -119,11 +125,14 @@ model = SampleThetaPhi(debug=True)
 model.initialize((0,0))
 
 def lnlike(p):
+    # Now we can proceed with the model
     try:
-        pars1 = ThetaParam(grid=p[0:2], vz=p[2], vsini=p[3], logOmega=p[4])
+        #pars1 = ThetaParam(grid=p[0:3], vz=p[3], vsini=p[4], logOmega=p[5])
+        pars1 = ThetaParam(grid=p[0:3], vz=p[3], vsini=p[4], logOmega=p[5], teff2=p[6], logOmega2=p[7])
         model.update_Theta(pars1)
         # hard code npoly=3 (for fixc0 = True with npoly=4)
-        pars2 = PhiParam(0, 0, True, p[5:8], p[8], p[9], p[10])
+        #pars2 = PhiParam(0, 0, True, p[6:9], p[9], p[10], p[11])
+        pars2 = PhiParam(0, 0, True, p[8:11], p[11], p[12], p[13])
         model.update_Phi(pars2)
         lnp = model.evaluate()
         return lnp
@@ -159,12 +168,12 @@ start = Starfish.config["Theta"]
 fname = Starfish.specfmt.format(model.spectrum_id, model.order) + "phi.json"
 phi0 = PhiParam.load(fname)
 
-ndim, nwalkers = 11, 40
+ndim, nwalkers = 14, 40
 
-p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"]] +
+p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"], start["teff2"], start["logOmega2"]] +
              phi0.cheb.tolist() + [phi0.sigAmp, phi0.logAmp, phi0.l])
 
-p0_std = [5, 0.02, 0.5, 0.5, 0.01, 0.005, 0.005, 0.005, 0.01, 0.001, 0.5]
+p0_std = [5, 0.02, 0.005, 0.5, 0.5, 0.01, 5, 0.01, 0.005, 0.005, 0.005, 0.01, 0.001, 0.5]
 
 if args.resume:
     p0_ball = np.load("emcee_chain.npy")[:,-1,:]
@@ -173,7 +182,6 @@ else:
 
 n_threads = multiprocessing.cpu_count()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, threads=n_threads)
-
 
 nsteps = args.samples
 ninc = args.incremental_save
