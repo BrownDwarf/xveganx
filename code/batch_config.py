@@ -4,12 +4,9 @@ import yaml
 import numpy as np
 import h5py
 
-ms = ms = list(range(100, 112)) + list(range(113, 126))
-
+ms = list(range(100, 112)) + list(range(113, 126))
 
 os.chdir(os.path.expandvars('$xveganx/sf/Anon1/'))
-
-os.getcwd()
 
 for m in ms:
 
@@ -32,14 +29,15 @@ for m in ms:
     config['grid']['wl_range'] = [lb, ub]
     config['PCA']['path'] = '$xveganx/sf/Anon1/m{:03d}/PHOENIX_IGRINS_H_PCA_Teff2700-4500.hdf5'.format(m)
     config['data']['instruments'] =['IGRINS_H']
+    config['Theta_priors']= '$xveganx/sf/Anon1/m{:03d}/user_prior.py'.format(m)
 
     os.makedirs(path_out, exist_ok=True)
     with open(sf_out, mode='w') as outfile:
         outfile.write(yaml.dump(config))
         print('wrote to {}'.format(path_out))
 
-for m in ms:
-    os.chdir("m{:03d}".format(m))
-    os.system('mkdir libraries &')
-    os.system('$Starfish/scripts/grid.py --create > grid.out &')
-    os.chdir("..")
+#for m in ms:
+#    os.chdir("m{:03d}".format(m))
+#    os.system('mkdir libraries &')
+#    os.system('$Starfish/scripts/grid.py --create > grid.out &')
+#    os.chdir("..")
