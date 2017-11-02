@@ -1,0 +1,17 @@
+name,master_fn,ASASSN_fn,Grankin08_fn
+Anon 1,Anon_1_flat.csv,ANON1_ASASSN_20170803.csv,hbc366.dat
+HD 283572,HD_283572_flat.csv,HD_283572_ASASSN_20170803.csv,hd283572.dat
+Hubble 4,Hubble_4_flat.csv,HUBBLE4_ASASSN_20170803.csv,hbc374.dat
+LkCa 1,LkCa_1_flat.csv,LkCa1_ASASSN_20170803.csv,lkca1.dat
+LkCa 4,LkCa_4_flat.csv,LkCa4_ASASSN_20170803.csv,lkca4.dat
+LkCa 7,LkCa_7_flat.csv,LkCa7_ASASSN_20170803.csv,lkca7.dat
+LkCa 14,LkCa_14_flat.csv,LkCa14_ASASSN_20170803.csv,lkca14.dat
+LkCa 16,LkCa_16_flat.csv,LkCa16_ASASSN_20170803.csv,lkca16.dat
+LkCa 19,LkCa_19_flat.csv,LkCa19_ASASSN_20170803.csv,lkca19.dat
+TAP 35,TAP_35_flat.csv,TAP35_ASASSN_20170803.csv,tap35.dat
+TAP 41,TAP_41_flat.csv,TAP41_ASASSN_20170803.csv,tap41.dat
+TAP 45,TAP_45_flat.csv,TAP45_ASASSN_20170803.csv,tap45.dat
+V819 Tau,V819_Tau_flat.csv,V819Tau_ASASSN_20170803.csv,v819tau.dat
+V826 Tau,V826_Tau_flat.csv,V826Tau_ASASSN_20170803.csv,v826tau.dat
+V827 Tau,V827_Tau_flat.csv,V827Tau_ASASSN_20170803.csv,v827tau.dat
+V836 Tau,V836_Tau_flat.csv,V836Tau_ASASSN_20170803.csv,v836tau.dat
