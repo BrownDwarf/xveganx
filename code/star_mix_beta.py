@@ -114,7 +114,7 @@ class Order(OrderBase):
         self.flux_scalar2 = self.emulator.absolute_flux
         self.Omega2 = 10**p.logOmega2
 
-class SampleThetaPhi(SampleThetaPhiBase):
+class SampleThetaPhi(Order, SampleThetaPhiBase):
     pass #put custom behavior here
 
 
@@ -176,7 +176,12 @@ p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"], s
 p0_std = [5, 0.02, 0.005, 0.5, 0.5, 0.01, 5, 0.01, 0.005, 0.005, 0.005, 0.01, 0.001, 0.5]
 
 if args.resume:
-    p0_ball = np.load("emcee_chain.npy")[:,-1,:]
+    try:
+        p0_ball = np.load("emcee_chain.npy")[:,-1,:]
+    except:
+        final_samples = np.load("temp_emcee_chain.npy")
+        max_obs = ws.any(axis=(0,2)).sum()
+        p0_ball = final_samples[:,max_obs-1,:]
 else:
     p0_ball = emcee.utils.sample_ball(p0, p0_std, size=nwalkers)
 
