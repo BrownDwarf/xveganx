@@ -6,6 +6,7 @@ from gatspy.periodic import LombScargle, LombScargleFast
 from astroML.time_series import search_frequencies, lomb_scargle, MultiTermFit
 from astroML.time_series import multiterm_periodogram
 from astroML.time_series import lomb_scargle
+import astroML.time_series
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context('paper', font_scale=1.4)
@@ -370,4 +371,42 @@ def seasonal_aggregation(master, target_name):
 
     return df_season
 
+def run_periodograms(light_curve, P_range=[0.1, 10], samples=10000):
+    '''Returns periodograms for hardcoded subset of K2 Cycle 2 lightcurve'''
+    x = light_curve.time.values
+    y = light_curve.flux.values
+    yerr = light_curve.err.values
 
+    periods = np.linspace(P_range[0], P_range[1], samples)
+
+    omega = 2.00*np.pi/periods
+
+    P_M = multiterm_periodogram(x, y, yerr, omega)
+    P_LS = lomb_scargle(x, y, yerr, omega)
+    return (periods, P_M, P_LS)
+
+def top_N_periods(periods, lomb_scargle_power, n=5):
+    '''Returns the top N Lomb-Scargle periods, given a vector of the periods and values'''
+
+    # Get all the local maxima
+    all_max_i = argrelmax(lomb_scargle_power)
+    max_LS = lomb_scargle_power[all_max_i]
+    max_periods = periods[all_max_i]
+
+    # Sort by the Lomb-Scale power
+    sort_i = np.argsort(max_LS)
+
+    # Only keep the top N periods
+    top_N_LS = max_LS[sort_i][::-1][0:n]
+    top_N_pers = max_periods[sort_i][::-1][0:n]
+
+    return top_N_pers, top_N_LS
+
+def plot_LC_and_periodograms(lc, periods, P_M, P_LS):
+    plt.figure(figsize=(14,6))
+    plt.subplot(121)
+    plt.plot(lc.time, lc.flux, '.')
+    plt.subplot(122)
+    plt.step(periods, P_M, label='Multi-term periodogram')
+    plt.step(periods, P_LS, label='Lomb Scargle')
+    plt.legend()
