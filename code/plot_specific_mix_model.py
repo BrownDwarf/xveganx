@@ -307,6 +307,13 @@ if args.config:
     ps = np.array(psl)
     df_out['model_composite'] = lnprob_all(ps)
 
+    pset1 = ps.copy()
+    pset1[5] = -20
+    df_out['model_cool50'] = lnprob_all(pset1)
+    pset2 = ps.copy()
+    pset2[7] = -20
+    df_out['model_hot50'] = lnprob_all(pset2)
+
     df_out.to_csv('spec_config.csv', index=False)
 
 if args.static:
