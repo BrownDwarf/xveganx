@@ -135,7 +135,7 @@ class Order:
 
         part1 = self.Omega**2 * self.flux_scalar**2 * X.dot(self.C_GP.dot(X.T))
         part2 = self.data_mat
-        
+
         #CC = X.dot(self.C_GP.dot(X.T)) + self.data_mat
         CC = part1 + part2
 
@@ -156,7 +156,7 @@ class Order:
             logdet = np.sum(2 * np.log((np.diag(factor))))
             self.lnprob = -0.5 * (np.dot(R, cho_solve((factor, flag), R)) + logdet)
 
-            self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
+            #self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
             return self.lnprob
 
         # To give us some debugging information about what went wrong.
@@ -181,7 +181,7 @@ class Order:
             p.grid[1] = fix_logg
         #print("grid pars are", p.grid)
 
-        self.logger.debug("Updating Theta parameters to {}".format(p))
+        #self.logger.debug("Updating Theta parameters to {}".format(p))
 
         # Store the current accepted values before overwriting with new proposed values.
         self.flux_mean_last = self.flux_mean.copy()
@@ -291,20 +291,20 @@ class SampleThetaPhi(Order):
 
             # sigAmp must be positive (this is effectively a prior)
             # See https://github.com/iancze/Starfish/issues/26
-            if not (0.0 < sigAmp): 
+            if not (0.0 < sigAmp):
                 self.lnprob_last = self.lnprob
                 lnp = -np.inf
                 self.logger.debug("sigAmp was negative, returning -np.inf")
                 self.lnprob = lnp # Same behavior as self.evaluate()
             else:
                 lnp = self.evaluate()
-                self.logger.debug("Evaluated Phi parameters: {} {}".format(par, lnp))
+                #self.logger.debug("Evaluated Phi parameters: {} {}".format(par, lnp))
 
             return lnp
 
 
     def update_Phi(self, p):
-        self.logger.debug("Updating nuisance parameters to {}".format(p))
+        #self.logger.debug("Updating nuisance parameters to {}".format(p))
 
         # Read off the Chebyshev parameters and update
         self.chebyshevSpectrum.update(p.cheb)
