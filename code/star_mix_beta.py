@@ -98,7 +98,7 @@ class Order(OrderBase):
             logdet = np.sum(2 * np.log((np.diag(factor))))
             self.lnprob = -0.5 * (np.dot(R, cho_solve((factor, flag), R)) + logdet)
 
-            self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
+            #self.logger.debug("Evaluating lnprob={}".format(self.lnprob))
             return self.lnprob
 
         # To give us some debugging information about what went wrong.
@@ -148,8 +148,8 @@ def book_keeping():
     'path_name':os.getcwd(),
     'start_time':t_start,
     'end_time':t_end,
-    'elapsed_time_s':elapsed_time,
-    'elapsed_time_hr':elapsed_time/3600.0,
+    'elapsed_time_s': np.round(elapsed_time,1),
+    'elapsed_time_hr':np.rount(elapsed_time/3600.0,2),
     'timestamp':timestamp,
     'N_samples_request':nsteps,
     'N_dim':ndim,
