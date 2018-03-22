@@ -149,7 +149,7 @@ def book_keeping():
     'start_time':t_start,
     'end_time':t_end,
     'elapsed_time_s': np.round(elapsed_time,1),
-    'elapsed_time_hr':np.rount(elapsed_time/3600.0,2),
+    'elapsed_time_hr':np.round(elapsed_time/3600.0,2),
     'timestamp':timestamp,
     'N_samples_request':nsteps,
     'N_dim':ndim,

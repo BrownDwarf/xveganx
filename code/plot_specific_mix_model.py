@@ -206,18 +206,19 @@ def lnprob_all(p):
 
 draws = []
 
-try:
-    ws = np.load("emcee_chain.npy")
-    burned = ws[:, -200:,:]
-except:
-    ws = np.load("temp_emcee_chain.npy")
-    max_save = ws.any(axis=(0,2)).sum()
-    burned = ws[:, max_save-200:max_save,:]
+if not args.config:
+    try:
+        ws = np.load("emcee_chain.npy")
+        burned = ws[:, -200:,:]
+    except:
+        ws = np.load("temp_emcee_chain.npy")
+        max_save = ws.any(axis=(0,2)).sum()
+        burned = ws[:, max_save-200:max_save,:]
 
-xs, ys, zs = burned.shape
-fc = burned.reshape(xs*ys, zs)
+    xs, ys, zs = burned.shape
+    fc = burned.reshape(xs*ys, zs)
 
-nx, ny = fc.shape
+    nx, ny = fc.shape
 
 
 #Colorbrewer bands

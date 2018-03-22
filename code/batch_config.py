@@ -23,7 +23,7 @@ for m in ms:
     wls = f['wls'][:]
     f.close()
 
-    config['data']['files'] = ['$xveganx/data/IGRINS/reduced/V827_IGRINS_2014112{:03d}.hdf5'.format(m)]
+    config['data']['files'] = ['$xveganx/data/IGRINS/reduced/V827_IGRINS_20141121_m{:03d}.hdf5'.format(m)]
     config['grid']['hdf5_path'] = '$xveganx/sf/V827Tau/m{:03d}/libraries/PHOENIX_IGRINS_m{:03d}_Teff2700-4500.hdf5'.format(m,m)
     lb, ub = int(np.floor(wls[0])), int(np.ceil(wls[-1]))
 
@@ -37,9 +37,9 @@ for m in ms:
         outfile.write(yaml.dump(config))
         print('wrote to {}'.format(path_out))
 
-for m in ms:
-    os.chdir("m{:03d}".format(m))
-    os.system('mkdir libraries &')
-    os.system('$Starfish/scripts/grid.py --create > grid.out &')
-    os.system('cp $xveganx/sf/V827Tau/m104/user_prior.py .')
-    os.chdir("..")
+#for m in ms:
+#    os.chdir("m{:03d}".format(m))
+#    os.system('mkdir libraries &')
+#    os.system('$Starfish/scripts/grid.py --create > grid.out &')
+#    os.system('cp $xveganx/sf/V827Tau/m104/user_prior.py .')
+#    os.chdir("..")
