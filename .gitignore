@@ -1,12 +1,40 @@
-.ipynb_checkpoints/
+### You do not need the truncated library file once you've stored the PCA step!
+### (Ignoring these saves a lot of space)
+**/libraries/*
+
+### Ancillary files generated in the PCA and grid.py steps that can be ignored
 *.out
 eparams_emcee.npy
 walkers_emcee.npy
-*.csv
+
+### Temporary model saves intended for quick custom spectra plotting
+spec_config.csv
+models_ff-05_50_95.csv
+CC.npy
+
+### Byproducts of spectral inference that are not needed.
+log.log
+sf_log_*.json
+
+### Main computational result of spectral inference, too large to save now
+### (we should consider putting them on Zenodo)
+emcee_chain.npy
+temp_emcee_chain.npy
+
+
+### The data files can be large, ignore everything for now until we can identify
+### a smaller subset of data to share.
 data/
-sf/
+
+### Ignore the paper framework for now, it's just placeholder text.
+document/
+
+### Mostly place holders and tempoary files right now
 *.ipynb
 *.png
 tools/
 results/
-document/
+.ipynb_checkpoints/
+
+### Miscellaneous
+sf/V827Tau/m103/output/mix_emcee/run_wwu/
