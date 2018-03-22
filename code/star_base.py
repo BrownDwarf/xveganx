@@ -77,7 +77,7 @@ class Order:
         else:
             self.logger.setLevel(logging.INFO)
 
-        self.logger.info("Initializing model on Spectrum {}, order {}.".format(self.spectrum_id, self.order_key))
+        self.logger.debug("Initializing model on Spectrum {}, order {}.".format(self.spectrum_id, self.order_key))
 
         self.npoly = Starfish.config["cheb_degree"]
         self.chebyshevSpectrum = ChebyshevSpectrum(self.dataSpectrum, self.order_key, npoly=self.npoly)

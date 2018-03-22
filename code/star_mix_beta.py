@@ -55,7 +55,7 @@ Instruments = [eval("Starfish.grid_tools." + inst)() for inst in Starfish.data["
 
 
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s -  %(message)s", filename="{}log.log".format(
-    Starfish.routdir), level=logging.DEBUG, filemode="w", datefmt='%m/%d/%Y %I:%M:%S %p')
+    Starfish.routdir), level=logging.INFO, filemode="w", datefmt='%m/%d/%Y %I:%M:%S %p')
 
 class Order(OrderBase):
 
