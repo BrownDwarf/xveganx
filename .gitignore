@@ -1,1 +1,12 @@
 .ipynb_checkpoints/
+*.out
+eparams_emcee.npy
+walkers_emcee.npy
+*.csv
+data/
+sf/
+*.ipynb
+*.png
+tools/
+results/
+document/
