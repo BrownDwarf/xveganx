@@ -1,0 +1,144 @@
+%\documentclass[iop,revtex4]{emulateapj}% change onecolumn to iop for fancy, iop to twocolumn for manuscript
+\documentclass[twocolumn]{emulateapj}% change onecolumn to iop for fancy, iop to onecolumn for manuscript
+%\documentclass[12pt,preprint]{aastex}
+
+%\usepackage{lineno}
+%\usepackage{blindtext}
+%\linenumbers
+
+\let\pwiflocal=\iffalse \let\pwifjournal=\iffalse
+%From: http://arxiv.org/format/1512.00483
+%\input{setup}
+\input{mgs_setup}
+
+
+\newcommand{\iancze}{{\sc C15}}
+
+\providecommand{\eprint}[1]{\href{http://arxiv.org/abs/#1}{#1}}
+\providecommand{\adsurl}[1]{\href{#1}{ADS}}
+\newcommand{\name}{LkCa 4 }
+\newcommand{\project}[1]{\textsl{#1}}
+%\def\vsini{$v\sin{i_*}$}
+
+
+\slugcomment{In preparation}
+
+\shorttitle{Physical properties of spotted Taurus members}
+
+\shortauthors{Gully-Santiago et al.}
+
+\bibliographystyle{yahapj}
+
+\begin{document}
+
+\title{The coverage fraction of starspots on young Taurus members and consequences for stellar ages estimates at 1$-$10 Myr}
+
+\author{Michael A. Gully-Santiago,\altaffilmark{1}, author list TBD}
+
+
+\altaffiltext{1}{Kepler/K2 Guest Observer Office, NASA Ames Research Center, Moffett Field, CA, USA}
+
+\begin{abstract}
+
+We assess starspot temperatures and coverage fraction for three heavily spotted Taurus pre-main sequence young stellar objects from their high-resolution, high bandwidth near infrared IGRINS spectroscopy.  We forward model the spectra with a mixture of cool and hot photosphere components using the \texttt{Starfish} spectral inference framework.  The disk-free, non-accreting sample members have 10$-$30 years worth of polychomatic photometry, which we use in four ways: first, to register the acquisition time of the spectroscopic measurement to the stellar rotational phase; second, to derive the secular changes of areal coverage fraction over 1 to 30 year timescales; third, to derive rotation periods; and fourth, to assign lower-limits to areal filling factors based on the amplitude of photometric variation and limiting case of non-emitting equatorial spots.  We derive starspot temperatures in the range of $x$ to $y$ K, and filling factors of $v$ to $z$.  These filling factors are typically $k$ to $m$ times higher than the limiting case of non-emitting equatorial spots, implying that either the stars possess large circumpolar starspots with the stellar spin axis inclined moderately towards our reference frame, or that the stars possess three or more dominant temperature components, rendering our two-temperature retrieval process flawed.  The filling factors and temperatures cause effective temperature estimates to systematically decrease, confounding age and mass estimates of these young stars and by extension all previous spectral-type-based estimates of fundamental properties of heavily spotted stars, though more work is needed.  The observations of secularly varying photometric amplitudes are consistent with the physical interpretations that some or all young stars pass through short-lived phases of enhanced starspot coverage, or that starspots migrate from near the poles towards the equator over time.
+
+\end{abstract}
+
+\keywords{stars: fundamental parameters ---  stars: low-mass --- stars: statistics}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+Wow, starspots are everywhere, look at this paper from Brett Morris \citep{}.
+
+\section{Observations}\label{sec:obs}
+
+\subsection{IGRINS Spectroscopy}\label{sec:igrins}
+Here are some citations:
+
+IGRINS \citep{park14}
+
+The data were reduced with the Pipeline Package \citep{jaejoonlee15}.
+
+\subsection{Photometric monitoring}
+
+We used photometry from \citep{grankin08}.
+
+
+ASAS3 \citep{pojmanski04}?
+
+Integral-OMC \citep{garzon12}?
+
+The AAVSO archive \citep{kafka16}?
+
+Unpublished data from the ASAS-SN survey \citep{shappee14}, yes!
+
+
+Multiterm Lomb-Scargle periodograms \citep{ivezic14}, and fourier series truncated to the first $\sim 4$ components]{vanderplas15a}.
+
+2MASS \citep{skrutskie06}.
+
+\section{FITS TO HIGH RESOLUTION SPECTRA}\label{sec:Starfish}
+
+
+\subsection{Methodology}\label{sec:methods}
+
+Of course we need! \citet[hereafter \iancze]{czekala15}
+yay!
+
+Phoenix woo!: \citep{husser13}.
+
+Somers woo!: \citep{somers15}.
+
+We use \texttt{emcee} \citep{foreman13}.
+
+
+\section{Conclusions}
+
+Yay, we did it!
+
+\clearpage
+\pagebreak
+
+
+\appendix
+
+\section{Are starspots confusing?}
+\label{methods-details}
+
+Short answer: no!
+
+\acknowledgements
+
+We thank ADS!
+
+
+{\it Facilities:} \facility{Smith (IGRINS)}, \facility{AAVSO}, \facility{CFHT (ESPaDOnS)}, \facility{INTEGRAL (OMC)}, \facility{ASAS}, \facility{CrAO:1.25m}, \facility{ARC (TripleSpec)}, \facility{Hale (DBSP)}, \facility{Gaia}
+
+{\it Software: }
+ \project{pandas} \citep{mckinney10},
+ \project{emcee} \citep{foreman13},
+ \project{matplotlib} \citep{hunter07},
+ \project{numpy} \citep{vanderwalt11},
+ \project{scipy} \citep{jones01},
+ \project{ipython} \citep{perez07},
+ \project{gatspy} \citep{JakeVanderplas2015},
+ \project{starfish} \citep{czekala15},
+ \project{seaborn} \citep{waskom14}
+%\software{%
+% \project{pandas} \citep{mckinney10}
+%    \project{emcee} \citep{foreman13},
+% \project{matplotlib} \citep{hunter07},
+% \project{numpy} \citep{vanderwalt11},
+% \project{scipy} \citep{jones01},
+% \project{ipython} \citep{perez07},
+% \project{gatspy} \citep{JakeVanderplas2015},
+% \project{starfish} \citep{czekala15}}.
+
+\clearpage
+
+\bibliographystyle{apj}
+\bibliography{ms}
+
+\end{document}
