@@ -7,6 +7,7 @@ from astroML.time_series import search_frequencies, lomb_scargle, MultiTermFit
 from astroML.time_series import multiterm_periodogram
 from astroML.time_series import lomb_scargle
 import astroML.time_series
+from astropy.io import fits
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context('paper', font_scale=1.4)
@@ -87,8 +88,8 @@ def flat_ASAS3(ASAS3_fn):
     '''
     cols = ['HJD','MAG_0','MAG_1','MAG_2','MAG_3','MAG_4',
             'MER_0','MER_1','MER_2','MER_3','MER_4','GRADE','FRAME']
-    as3 = pd.read_csv('../data/ASAS3/V827Tau_ASAS3.dat', comment='#',
-                      delim_whitespace=True, names=as3_names)
+    as3 = pd.read_csv(ASAS3_fn, comment='#',
+                      delim_whitespace=True, names=cols)
     gi = (as3.MAG_0 < 20) & (as3.GRADE != 'D')
     as3 = as3[gi]
     as3['JD_like'] = as3.HJD + 2450000.0
@@ -100,6 +101,35 @@ def flat_ASAS3(ASAS3_fn):
     as3['source'] = 'ASAS3'
     return as3
 
+def flat_AAVSO(AAVSO_fn):
+    '''
+    Returns a "flat" pandas DataFrame given a filename
+    '''
+    aavso = pd.read_csv(AAVSO_fn, usecols=[0,1,2,4])
+    bands = ['B', 'R', 'V']
+    gi = aavso.Band.isin(bands)
+    aavso = aavso[gi]
+    aa_new = aavso.pivot(index='JD', columns='Band')
+    new_cols = [s + 'mag' for s in bands] + [s + 'err' for s in bands]
+    aa_new.columns = new_cols
+    aa_new = aa_new.reset_index()
+    aa_new = aa_new.rename(columns={'JD':'JD_like'})
+    aa_new['date_type'] = 'JD'
+    aa_new['source'] = 'AAVSO'
+    return aa_new
+
+def flat_IOMC(IOMC_fn):
+    '''
+    Returns a "flat" pandas DataFrame given a filename
+    '''
+    with fits.open(IOMC_fn) as ff:
+        hdu1 = ff[1]
+        df_out = pd.DataFrame({'JD_like':hdu1.data['BARYTIME']+2451544.5,
+                       'Vmag':hdu1.data['MAG_V'],
+                       'Verr':hdu1.data['ERRMAG_V']})
+        df_out['source'] = 'Integral-OMC'
+        df_out['date_type'] = 'ISDC JD'
+        return df_out
 
 @np.vectorize
 def jd_to_date(jd):
@@ -393,9 +423,17 @@ def flatten_photometry():
     fn_df = pd.read_csv('../data/metadata/photometry_filenames.csv')
 
     for i in fn_df.index:
-        gr_data = flat_grankin08('../data/Grankin_2008/'+fn_df.Grankin08_fn[i])
-        ASASSN_data = flat_ASASSN('../data/ASASSN/'+fn_df.ASASSN_fn[i])
-        master = pd.concat([gr_data, ASASSN_data], join='outer', ignore_index=True, axis=0)
+        df_list = []
+        if fn_df.Grankin08_fn[i] is not np.NaN:
+            gr_data = flat_grankin08('../data/Grankin_2008/'+fn_df.Grankin08_fn[i])
+            df_list.append(gr_data)
+        if fn_df.ASASSN_fn[i] is not np.NaN:
+            ASASSN_data = flat_ASASSN('../data/ASASSN/'+fn_df.ASASSN_fn[i])
+            df_list.append(ASASSN_data)
+        if fn_df.ASAS3_fn[i] is not np.NaN:
+            as3 = flat_ASAS3('../data/ASAS3/'+fn_df.ASAS3_fn[i])
+            df_list.append(as3)
+        master = pd.concat(df_list, join='outer', ignore_index=True, axis=0)
         master['year'], master['month'], master['day'] = jd_to_date(master.JD_like.values)
         master = assign_season(master)
         col_order = ['JD_like', 'year', 'month', 'day', 'season',
