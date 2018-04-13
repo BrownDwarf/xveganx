@@ -81,6 +81,26 @@ def flat_ASASSN(ASASSN_fn):
 
     return df
 
+def flat_ASAS3(ASAS3_fn):
+    '''
+    Returns a "flat" pandas DataFrame given a filename
+    '''
+    cols = ['HJD','MAG_0','MAG_1','MAG_2','MAG_3','MAG_4',
+            'MER_0','MER_1','MER_2','MER_3','MER_4','GRADE','FRAME']
+    as3 = pd.read_csv('../data/ASAS3/V827Tau_ASAS3.dat', comment='#',
+                      delim_whitespace=True, names=as3_names)
+    gi = (as3.MAG_0 < 20) & (as3.GRADE != 'D')
+    as3 = as3[gi]
+    as3['JD_like'] = as3.HJD + 2450000.0
+    as3['date_type'] = 'HJD'
+    as3['Vmag'], as3['Verr']= as3.MAG_0, as3.MER_0
+    as3.drop(['HJD','MAG_0', 'MAG_1', 'MAG_2', 'MAG_3', 'MAG_4', 'MER_0', 'MER_1',
+       'MER_2', 'MER_3', 'MER_4', 'GRADE', 'FRAME'], axis=1, inplace=True)
+
+    as3['source'] = 'ASAS3'
+    return as3
+
+
 @np.vectorize
 def jd_to_date(jd):
     """
@@ -295,6 +315,76 @@ def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), sa
     plt.savefig(savefig_file, bbox_inches='tight')
 
 
+def plot_season_minimum(master, season_agg, epochs, ylim=(0, 1.1), savefig_file='../results/test_min_spot.pdf'):
+    '''
+    Plots all the available seasons of photometry in phase-folded postage stamps.
+    '''
+    fig = plt.figure(figsize=(8.5, 11))
+    fig.subplots_adjust(hspace=0.1, bottom=0.06, top=0.94, left=0.12, right=0.94)
+    n_seasons = len(season_agg.season)
+    ylabel='Minimum $f_\mathrm{spot}$'
+
+    for i in range(n_seasons):
+        # get the data and best-fit angular frequency
+        s = season_agg.season[i]
+        ids = master.season == s
+        df = master[ids]
+        t = df.JD_like.values
+        y = df.flux_rel.values
+        dy = df.flux_rel.values*0.02
+        #this_P = season_agg.P_est1[i]
+        this_P = season_agg.P_est1.median()
+        phased_t = np.mod(t, this_P)/this_P
+
+        # Fit a multiterm model
+        Nterms = 4
+        reg = 0.1 * np.ones(2 * Nterms + 1)
+        reg[:5] = 0 # no regularization on low-order terms
+        if (df.year.min() == 2006):
+            #TODO: change this to something sensible
+            reg = 0.3 * np.ones(2 * Nterms + 1)
+            reg[:3] = 0 # no regularization on low-order terms
+
+        modelV = LombScargle(Nterms=4, regularization=reg)
+        mask = y == y # We can mask flares later on
+        modelV.fit(t[mask], y[mask], dy[mask])
+        tfit = np.linspace(0, this_P, 100)
+        yfitV = modelV.predict(tfit, period=this_P)
+
+
+        # plot the phased data
+        ax = fig.add_subplot(6,4,1 + i)
+        plt.plot(tfit/this_P, yfitV, alpha=0.5)
+        ax.errorbar(phased_t, y, dy, fmt='.k', ecolor='gray',
+                    lw=1, ms=4, capsize=1.5)
+
+        #---Mark observation epochs---
+        ts_ids = (np.float(s) == epochs.AdoptedSeason)
+        if ts_ids.sum() > 0:
+            for ei in epochs.index.values[ts_ids.values]:
+                this_phase = np.mod(epochs.JD_like[ei], this_P)/this_P
+                ax.vlines(this_phase, 0, 1, linestyles=epochs.linestyles[ei],
+                          colors=epochs.color[ei], alpha=0.8)
+        #-----------------------------
+
+        ax.yaxis.set_major_locator(plt.MaxNLocator(4))
+        ax.set_ylim(ylim)
+
+        ax.text(0.03, 0.96, "{}".format(season_agg.years[i]),ha='left', va='top',
+                transform=ax.transAxes)
+
+        if i < 18 :
+            ax.xaxis.set_major_formatter(plt.NullFormatter())
+        if i % 4 != 0:
+            ax.yaxis.set_major_formatter(plt.NullFormatter())
+        if i % 4 == 0:
+            ax.set_ylabel(ylabel)
+
+        if i in (18, 19, 20, 21):
+            ax.set_xlabel('phase')
+
+    plt.savefig(savefig_file, bbox_inches='tight')
+
 
 def flatten_photometry():
     '''
@@ -332,6 +422,10 @@ def master_photometry():
         this_master = pd.read_csv('../data/flat_photometry/'+fn_df.master_fn[i])
         this_master['object'] = fn_df.name[i]
         master = master.append(this_master, ignore_index=True)
+
+    #Add a row for flux
+    master['flux_rel'] = 10**(-1.0*master.Vmag/2.5)
+    master['flux_rel'] = master['flux_rel'] /np.percentile(master.V_flux_rel, [99])
 
     return master
 
