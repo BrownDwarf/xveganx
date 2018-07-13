@@ -336,6 +336,8 @@ if args.static:
     # Sort the flatchain by fill factor:
     fc_sorted = fc
     ind_med = 60 #Random
+    ind_lo = 6 #0.05*8000
+    ind_hi = 114 #0.95*8000
 
     df_out = pd.DataFrame({'wl':wl, 'data':data})
 

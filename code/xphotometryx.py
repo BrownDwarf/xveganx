@@ -383,7 +383,7 @@ def plot_season_minimum(master, season_agg, epochs, ylim=(0, 1.1), savefig_file=
 
 
         # plot the phased data
-        ax = fig.add_subplot(6,4,1 + i)
+        ax = fig.add_subplot(6,5,1 + i)
         plt.plot(tfit/this_P, yfitV, alpha=0.5)
         ax.errorbar(phased_t, y, dy, fmt='.k', ecolor='gray',
                     lw=1, ms=4, capsize=1.5)
@@ -433,6 +433,12 @@ def flatten_photometry():
         if fn_df.ASAS3_fn[i] is not np.NaN:
             as3 = flat_ASAS3('../data/ASAS3/'+fn_df.ASAS3_fn[i])
             df_list.append(as3)
+        if fn_df.AAVSO_fn[i] is not np.NaN:
+            aavso = flat_AAVSO('../data/AAVSO/'+fn_df.AAVSO_fn[i])
+            df_list.append(aavso)
+        if fn_df.IOMC_fn[i] is not np.NaN:
+            IOMC = flat_IOMC('../data/Integral_OMC/'+fn_df.IOMC_fn[i])
+            df_list.append(IOMC)
         master = pd.concat(df_list, join='outer', ignore_index=True, axis=0)
         master['year'], master['month'], master['day'] = jd_to_date(master.JD_like.values)
         master = assign_season(master)
@@ -462,8 +468,8 @@ def master_photometry():
         master = master.append(this_master, ignore_index=True)
 
     #Add a row for flux
-    master['flux_rel'] = 10**(-1.0*master.Vmag/2.5)
-    master['flux_rel'] = master['flux_rel'] /np.percentile(master.V_flux_rel, [99])
+    #master['flux_rel'] = 10**(-1.0*master.Vmag/2.5)
+    #master['flux_rel'] = master['flux_rel'] /np.percentile(master.V_flux_rel, [99])
 
     return master
 
