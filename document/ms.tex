@@ -54,59 +54,69 @@ The evolutionary state of a star can be superbly predicted with an age and a mas
 
 One observational manifestation of rotationally-heightened magnetic fields is the presence of \emph{starspots}.  Starspots serve as a familiar---albeit inexact---avenue through which we can quantify possible limitations to isochronal age estimates.  Importantly, starspots possess many favorable observational properties that form the central thrust of this paper.  In our previous paper \citep{2017ApJ...836..200G}, we combined multiple datasets to reveal a large $\sim75\%$ coverage fraction of starspots on the surface of the Weak-Lined T-Tauri Star (WTTS) LkCa~4.  Here we seek to identify whether LkCa~4 merely represents an extreme outlier, or whether other WTTS's can possess similiarly large starspots.
 
+%Fill in more thereoy here
+\citet{somers15} emphasized the roll of starspots in inferring stellar ages.
 
 We first emphasize possible geometric degeneracies that can give rise to larger-than-expected starspots.  We then collate numerous photometric and spectroscopic data sources (Section XXX), and their starspot-centric analyses (Section XXX).  We combine inferences on our small sample of stars to assess the effect of starspots on the pre-main sequence HR-diagram (Section XXX).  Finally we question our initial assumptions in Section XXX.
 
 \section{Observations}\label{sec:obs}
 
-
-
-
 \subsection{IGRINS Spectroscopy}\label{sec:igrins}
 
-Recently, \citet{2017ApJ...836..200G} found evidence for a large starspots on the Weak-Lined T-Tauri Star LkCa 4.
-Here are some citations:
-
-IGRINS \citep{park14}
-
-The data were reduced with the Pipeline Package \citep{jaejoonlee15}.
+V827 Tau was observed on the Immersion Grating Infrared Spectrograph \citep[IGRINS]{park14} at the 2.7~m Harlan J. Smith Telescope at McDonald Observatory on 2014-11-21 at 05:23 UTC by observers SK Park, H Kim, JJ Lee.  The data were reduced with the Pipeline Package \citep{jaejoonlee15}.
 
 \subsection{Photometric monitoring}
 
-We used photometry from \citep{grankin08}.
+We compiled many sources of publicly available $V-$band photometry datapoints including 236 from \citep{grankin08}, 552 from ASAS3 \citep{pojmanski04}, 473 from the AAVSO archive \citep{kafka16}, and 306 unpublished data points from the ASAS-SN survey \citep{shappee14}.  We spot-checked the diverse sources of photometry finding consistency in estimated flux levels when acquired near-contemporaneously.Figure \ref{fig:PhotTime} shows the compilation of all available photometry on V827 Tau.  Figure \ref{fig:PhotStamps} shows a zoom-in postage stamp on each season, phase folded with a period $P=3.75837$ days.
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=0.98\textwidth]{figures/V827_phot1990-2017.pdf}
+ \caption{Compilation of archival and new flux measurements in $V-$band for V827 Tau, normalized to the global maximum flux value, which occurred in 1990.  The y-axis equals the minimum starspot area, when flux deficits are interpreted with the simplest possible analytic starspot model.}
+ \label{fig:PhotTime}
+\end{figure*}
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=0.98\textwidth]{figures/V827Tau_25season_stamps_V.pdf}
+ \caption{Phase-folded $V-$band flux measurements of V827 Tau grouped into 25 observing seasons, and normalized to the global maximum in 1990.  The y-axis equals the minimum starspot area, when flux deficits are interpreted with the simplest possible analytic starspot model.}
+ \label{fig:PhotStamps}
+\end{figure*}
 
 
-ASAS3 \citep{pojmanski04}?
+We retrieved K2 Campaign 13 (C13) \cite{2014PASP..126..398H} lightcurves for V827 Tau, possessing EPIC ID 210698281.
 
-Integral-OMC \citep{garzon12}?
+%We retrieved 2MASS photometry \citep{skrutskie06}.
 
-The AAVSO archive \citep{kafka16}?
+\section{Analysis}\label{sec:Analysis}
+%Multiterm Lomb-Scargle periodograms \citep{ivezic14}, and Fourier series truncated to the first $\sim 4$ components]{vanderplas15a}.
+ We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14}, and Fourier series truncated to the first $\sim 4$ components \citep{vanderplas15a} on the K2 C13 lightcurve, yielding a 3.7584 day period.  We then fit a second order polynomial plus sine-and-cosine model with linear least squares.  The periodic minimum K2 flux corresponds to a flux decrement of 23.5\% from its maximum.  Figure \ref{fig:V827TauK2} shows the lightcurve overplotted with the sinusoidal model.
 
-Unpublished data from the ASAS-SN survey \citep{shappee14}, yes!
+ \begin{figure*}
+ \centering
+ \includegraphics[width=0.98\textwidth]{figures/V827_Tau_K2C13_lightcurve.pdf}
+ \caption{K2 C13 lightcurve of V827 Tau with a polynomial and sinusoidal model overplotted.  A few flares are perceptible.}
+ \label{fig:V827TauK2}
+\end{figure*}
 
+We derived starspot temperatures and areal filling factors from IGRINS $H-$band spectra using the inference framework \texttt{Starfish} \citep{czekala15}, as extended by \citet{2017ApJ...836..200G}.  We employed PHOENIX synthetic model with an updated version of \texttt{Starfish} that maintains the native absolute fluxes from \citet{husser13}, rather than the slightly inaccurate interpolation introduced in the Appendix of \citet{2017ApJ...836..200G}.  We ran 5000 samples with 40 \texttt{emcee} walkers \citep{foreman13}, with manual spot-checking of convergence.  We find typical filling factors around $f_\mathrm{spot} \sim 75\%$ and temperatures $T_\mathrm{spot} \sim 2600$ K.
 
-Multiterm Lomb-Scargle periodograms \citep{ivezic14}, and fourier series truncated to the first $\sim 4$ components]{vanderplas15a}.
+We observed reasonably good agreedment when we overplotted our model prediction spectra with the data.  We do not expect the models to be perfect, due to known model mis-specifications such as imperfect line lists and un-modeled magnetic Zeeman broadening, to name a few.
 
-2MASS \citep{skrutskie06}.
+The archival and K2 lightcurves constrain the minimum possible starspot coverage, assuming the Simplest Possible Analytic Starspot Model (SPASM).  Briefly, the SPASM interprets the lightcurve minimum as arising from a single, non-emitting, equatorial starspot on an edge-on star, and interprets the lightcurve maximum as \emph{spot-free}, that is, entirely devoid of starspots.  With these admittedly extreme assumptions, the flux minimum $F_{min}$ is exactly equal to the starspot areal surface coverage fraction, $f_{\mathrm{spot}}$.  The SPASM can be applied to a single season, such that there always exists a spot-free hemisphere, or can be applied to a global, long-term photometric dataset such as the one we have assembled for V827 Tau.  The global maximum flux for V827 Tau occurred on September 21, 1990, with $V=12.242$.Since then, the flux has faded 40\% to a median $V-$band magnitude of 12.63 in the 2016-2017 season.  The IGRINS spectrum was coincidentally acquired at the minimum of the rotationally modulated flux lightcurve, which corresponds to a global $F_{min} = f_{\mathrm{spot, min}} = 50\%$.
 
-\section{FITS TO HIGH RESOLUTION SPECTRA}\label{sec:Starfish}
+Figure \ref{} plots the constraints of starspot filling factor versus starspot temperature.  The burned-in MCMC draws from the posterior probability density distribution inferred from IGRINS spectra aggregated for all spectral orders are overplotted as a 2D-histogram.
 
-
-\subsection{Methodology}\label{sec:methods}
-
-Of course we need! \citet[hereafter \iancze]{czekala15}
-yay!
-
-Phoenix woo!: \citep{husser13}.
-
-Somers woo!: \citep{somers15}.
-
-We use \texttt{emcee} \citep{foreman13}.
-
+ \begin{figure*}
+ \centering
+ \includegraphics[width=0.98\textwidth]{figures/V827_Tau_Starfish_results.pdf}
+ \caption{Results of Starfish-based inference of starspot filling factor and temperature for 22 IGRINS $H-$band orders.  The size of the points is proportional to the strength of the posterior constraint on $f_{\rm spot}$ for each order.}
+ \label{fig:V827TauStarfish}
+\end{figure*}
 
 \section{Conclusions}
 
-Yay, we did it!
+Reiteration here.
 
 \clearpage
 \pagebreak
@@ -121,7 +131,14 @@ Short answer: no!
 
 \acknowledgements
 
+%ADS
 We thank ADS!
+
+%Kepler
+This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission directorate.
+
+% MAST
+Some/all of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555.
 
 
 {\it Facilities:} \facility{Smith (IGRINS)}, \facility{AAVSO}, \facility{CFHT (ESPaDOnS)}, \facility{INTEGRAL (OMC)}, \facility{ASAS}, \facility{CrAO:1.25m}, \facility{ARC (TripleSpec)}, \facility{Hale (DBSP)}, \facility{Gaia}
