@@ -59,6 +59,45 @@ One observational manifestation of rotationally-heightened magnetic fields is th
 
 We first emphasize possible geometric degeneracies that can give rise to larger-than-expected starspots.  We then collate numerous photometric and spectroscopic data sources (Section XXX), and their starspot-centric analyses (Section XXX).  We combine inferences on our small sample of stars to assess the effect of starspots on the pre-main sequence HR-diagram (Section XXX).  Finally we question our initial assumptions in Section XXX.
 
+\section{Methods}\label{sec:methods}
+
+\textbf{Our limited understanding of starspot properties, observational biases (ref `Table A1`)}
+Observational limitations usually preclude a complete accounting of a star's surface structures.  In this section we consider a range of extreme limiting cases of starspot geometries as a guide to interpreting observations.  These admittedly pathological limiting cases do not represent physically plausible scenarios.  Instead they serve as benchmarks beyond which no further physical models can exist without changing assumptions or dismissing observations.
+
+In this paper we will assume the target stars are all \emph{starspot dominated}, meaning that in the observations of interest, the dominant variance attributable to stellar activity arises from the presence of darker-than-average regions with characteristic temperatures cooler than their ambient photospheres, and not from brighter-and-hotter-than-average regions such as faculae or plages.  It is not yet known in which scenarios this assumption holds, but early evidence suggests that rapidly rotating sun-like stars are more likely to be starspot dominated than plage dominated in the visible waveband \citep{2017ApJ...851..116M}.  Tomographic maps of rapidly rotating young stars also indicate starspot domination \citep{donati14}.  While most results of the paper work equally well by swapping faculae-dominated for starspot-dominated, the assumptions utterly fail if we allow starspots and faculae to have comparable effect sizes on the same target star.
+
+This paper focuses on methodologies applicable to disk-free, accretion-free rotating young stars, which serve as a great testbed for understanding starspots owing to their large surface magnetic fields and large amplitude of photometric variability.  The methods should also apply to main sequence and post-main sequence stars, albeit at typically diminished effect sizes.
+
+
+\subsection{Limiting cases for interpreting monochromatic lightcurves}
+The appearance and disappearance of starspots onto the unresolved hemisphere of a rotating star results in familiar rotationally-modulated stellar lightcurves.  Monochromatic lightcurves cannot be inverted unambiguously to yield a mapping of surface structures.  Young stellar lightcurves rarely show flat-topped lightcurves indicative of a single starspot.  Instead, most Kepler/K2 lightcurves of disk-free, accretion-free rotating young stars look like sine waves, or mixtures of sine waves.  The sine wave periods offer a simple interpretation-- the rotation period of the star if solid body rotation is assumed, or the rotation period evaluated at the latitude of the dominant starspot group in the case of differential rotation.  The sine wave amplitudes encode partial information about the starspot \emph{size} and temperature contrast to the ambient photosphere.  Unambiguously interpreting the absolute starspot \emph{size} and temperature from monochromatic lightcurve amplitudes requires additional geometric assumptions on the number, size, lifetimes, latitudinal and longitudinal distributions, and clustering properties of spots.  Observations of these quantities exists only for the sun, so their adoption lacks justification in anything but solar analogs.  Figure \ref{fig:cartoon} illustrates four examples of disparate stellar surface morphologies that possess comparable or identical photometric amplitudes and periods.
+
+The first scenario illustrates a solitary non-emitting (i.e. zero Kelvin) starspot near the equator of a modestly inclined star.  Ignoring limb darkening, the peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to the areal filling factor of the starspot.
+
+The second scenario illustrates is pathological, but informative.  Consider an equator-on star in which one entire hemisphere (e.g. Eastern Hemisphere) possesses an isothermal photosphere, and the diametrically opposed hemisphere (e.g. Western Hemisphere) possess a cooler isothermal temperature.  The cooler hemisphere represents the lightcurve minimum, in which the observer receives less band-averaged flux simply because $T^4$ is smaller.  No known physical process is capable of delivering such a pathological structure, but nevertheless the temperature difference between the two hemispheres represents the minimum possible temperature contrast of a starspot, assuming the spots are isothermal.  The peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to:
+
+
+\begin{equation}
+1- \int \frac{f_{\rm cool}(\lambda)}{f_{\rm ambient}(\lambda)} \epsilon(\lambda) d\lambda
+\end{equation}
+
+where $f_{\rm cool}$ and $f_{\rm ambient}$ refer to the flux of the photospheres for the cooler and hotter hemispheres respectively, and the integration includes the wavelength-dependent instrumental response.
+
+The third illustration depicts another pathological geometry: the \emph{pole-on} star has a starspot that grows and shrinks cyclicly with a period $P \neq P_{\rm rot}$.  In this scenario, the rotation period is likely to be mis-identified.  The lightcurve amplitude depends on the size and temperature contrast of the spot.
+
+The right-most illustration depicts a high-latitude active longitude in which the starspot is always visible from the observers perspective, but rotational modulation geometrically forshortens the perceived solid angle of the spot owing to projection effects, and limb darkening.  The amplitude of the lightcurve depends sensitively on the inclination of the star, the latitude of the spot, the wavelength-dependent limb darkening, the waveband of the observation, the temperature constrast of the spot, and the size of the spot.
+
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=0.98\textwidth, trim={0 5cm 0 4cm},clip]{figures/cartoon_illustration.pdf}
+ \caption{Cartoon illustration of stars possessing different inclinations, starspot geometries, and positions, yet possessing the same lightcurve morphologies.}
+ \label{fig:cartoon}
+\end{figure*}
+
+
+
+
 \section{Observations}\label{sec:obs}
 
 \subsection{IGRINS Spectroscopy}\label{sec:igrins}
