@@ -1,0 +1,68 @@
+# Outline
+
+- **Introduction**
+	- [x] Age, Mass, and *rotation* as predictors of evolutionary state.
+	- [x] Starspots as a manifestation of rotation, uniqueness
+	- [ ] Recent theoretical advances
+	- [x] Layout of this paper
+- **Methods**
+	- [ ] Our limited understanding of starspot properties, observational biases (ref `Table A1`)
+	- [ ] Interpreting lightcurves
+		- [ ] Intro: limitations of "lightcurve inversions", cite (Basri, Roettenbacher)
+		- [ ] Need for assuming temperature distribution
+		- [x] Simplest Possible Analytic Starspot Model (SPASM)
+		- [ ] Pathologically Asymmetric Two-temperature Hemispheres Equator-on Model (PADOTHEM)
+		- [ ] Pole-on star with Any Starspot Distribution Model (PSASDM)
+		- [ ] Need to assume "starspot-dominated" or "faculae dominated"
+		- [ ] Practical considerations for monochromatic lightcurves-- fitting amplitude and (in the case of Kepler/K2) possibility of spurious secular trends.  
+		- [ ] Multi-term Lomb-Scargle and Fourier reconstruction
+		- [ ] `Equation` Fourier reconstruction with linear coefficients + cross-validation
+		- [ ] `figure:` Cartoon of starspot
+	- [ ] Spectroscopy
+		- [ ] Improved accuracy over Gully-Santiago et al. 2017
+		- [ ] Philosophy: measurement versus detection
+- **Observations and data reduction**
+	- [x] IGRINS observations
+	- [x] Ground-based photometric monitoring
+	- [ ] K2 data, add in proposal IDs
+	- [ ] *bonus* High resolution imaging to constrain multiplicity status?
+	- [ ] *bonus* Gaia data -- polychromatic photometry? Distance? goodness-of-fit metric / binarity?
+- **Analysis**
+	- [x] K2 data
+		- [x] Aperture selection, intercomparison of detrending techniques
+	- [ ] Archival V-band photometry
+		- [ ] Long-term trends
+		- [ ] Global flux deficit
+	- [ ] K2 detrending, aperture selection, intercomparison of detrending techniques
+	- [ ] IGRINS two-temperature spectral inference
+		- [ ] MCMC convergence and posterior predictive checks
+			- [ ] `figure:` IGRINS Spectra
+		- [ ] Internal consistency of vsini, v_z, GP hyperparameters
+			- [ ] `figure:` Violin plot
+	- [ ] Archival BRI-band photometry
+		- [ ] Color interpretation?
+- **Results**
+	- [ ] V827 Tau has at least 23% coverage fraction of spots (K2)
+	- [ ] V827 Tau has at least  X Temp of spots (K2)
+	- [ ] V827 Tau has at least 50% coverage fraction of spots (1990 Archival)
+	- [ ] V827 Tau has at least X Temp of spots (1990 Archival)
+	- [ ] V827 Tau has ~75% coverage fraction of spots with T_spot ~ Y (IGRINS + Starfish)
+		- [ ] `figure:` T_spot versus f_spot plot with lightcurve constraints
+- **Discussion**
+	- [ ] Interpreting geometries with circumpolar active longitudes, or migrating active latitudes
+	- [ ] Derived geometrical scaling factor and comparison to Rackham+ and Zhen+
+	- [ ] Which portions of the IGRINS spectra are most informative?
+	- [ ] Does the T_spot scatter represent probes of different atmospheric depths at different wavelengths?
+	- [ ] Comparison to LkCa4
+		- [ ] *bonus* `figure:` LkCa4 T_spot versus f_spot plot with lightcurve constraints
+	- [ ] How do our results change if we relax our assumptions?
+	- [ ] Are our results consistent with the polychromatic photometry?
+		- [ ] *bonus* `figure:` Prediction of color amplitude versus time versus observations
+	- [ ] What would you have derived for spot sizes based on each of the other seasons alone?
+		- [ ] *bonus* `figure:` 1990 versus 2001 versus K2 epoch
+	- [ ] Where does V827 Tau sit in a new HR diagram? (new Somers models)
+		- [ ] *bonus* `figure:` PMS HR diagram with new Somers tracks
+- **Appendix**
+	- [ ] *optional* `Table A1` of starspot characterization methods
+	- [ ] *bonus* K2 Detection of flares
+	- [ ] *bonus* K2 planet search-- transit / reflected light hot-Jupiter?
