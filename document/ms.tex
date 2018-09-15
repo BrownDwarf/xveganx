@@ -5,6 +5,8 @@
 %\usepackage{lineno}
 %\usepackage{blindtext}
 %\linenumbers
+%\usepackage{breqn}
+\usepackage{amsmath}
 
 \let\pwiflocal=\iffalse \let\pwifjournal=\iffalse
 %From: http://arxiv.org/format/1512.00483
@@ -61,7 +63,7 @@ We first emphasize possible geometric degeneracies that can give rise to larger-
 
 \section{Methods}\label{sec:methods}
 
-\textbf{Our limited understanding of starspot properties, observational biases (ref `Table A1`)}
+\textbf{Our limited understanding of starspot properties, observational biases}
 Observational limitations usually preclude a complete accounting of a star's surface structures.  In this section we consider a range of extreme limiting cases of starspot geometries as a guide to interpreting observations.  These admittedly pathological limiting cases do not represent physically plausible scenarios.  Instead they serve as benchmarks beyond which no further physical models can exist without changing assumptions or dismissing observations.
 
 In this paper we will assume the target stars are all \emph{starspot dominated}, meaning that in the observations of interest, the dominant variance attributable to stellar activity arises from the presence of darker-than-average regions with characteristic temperatures cooler than their ambient photospheres, and not from brighter-and-hotter-than-average regions such as faculae or plages.  It is not yet known in which scenarios this assumption holds, but early evidence suggests that rapidly rotating sun-like stars are more likely to be starspot dominated than plage dominated in the visible waveband \citep{2017ApJ...851..116M}.  Tomographic maps of rapidly rotating young stars also indicate starspot domination \citep{donati14}.  While most results of the paper work equally well by swapping faculae-dominated for starspot-dominated, the assumptions utterly fail if we allow starspots and faculae to have comparable effect sizes on the same target star.
@@ -74,7 +76,7 @@ The appearance and disappearance of starspots onto the unresolved hemisphere of 
 
 The first scenario illustrates a solitary non-emitting (i.e. zero Kelvin) starspot near the equator of a modestly inclined star.  Ignoring limb darkening, the peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to the areal filling factor of the starspot.
 
-The second scenario illustrates is pathological, but informative.  Consider an equator-on star in which one entire hemisphere (e.g. Eastern Hemisphere) possesses an isothermal photosphere, and the diametrically opposed hemisphere (e.g. Western Hemisphere) possess a cooler isothermal temperature.  The cooler hemisphere represents the lightcurve minimum, in which the observer receives less band-averaged flux simply because $T^4$ is smaller.  No known physical process is capable of delivering such a pathological structure, but nevertheless the temperature difference between the two hemispheres represents the minimum possible temperature contrast of a starspot, assuming the spots are isothermal.  The peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to:
+The second scenario is pathological, but informative.  Consider an equator-on star in which one entire hemisphere (e.g. Eastern Hemisphere) possesses an isothermal photosphere, and the diametrically opposed hemisphere (e.g. Western Hemisphere) possess a cooler isothermal temperature.  The cooler hemisphere represents the lightcurve minimum, in which the observer receives less band-averaged flux simply because $T^4$ is smaller.  No known physical process is capable of delivering such a pathological structure, but nevertheless the temperature difference between the two hemispheres represents the minimum possible temperature contrast of a starspot, assuming the spots are isothermal.  The peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to:
 
 
 \begin{equation}
@@ -95,6 +97,30 @@ The right-most illustration depicts a high-latitude active longitude in which th
  \label{fig:cartoon}
 \end{figure*}
 
+\subsection{Practical considerations for monochromatic lightcurves}
+
+Deriving amplitudes from sinusoidal lightcurves should be as simple as measuring the peak-minus-valley flux differences.  In practice, additional factors complicate such a straightforward analysis.  One main uncertainty is how to treat \emph{secular} trends, in which the star's flux waxes and wanes with both an oscillatory function of periods $P_{\rm rot}$ and with a slow-varying mean level with characteristic timescales $t_{\rm secular}$.  Secular changes in flux could be interpreted as a growing or waning average starspot coverage fraction as in a long-term stellar activity cycles.  The interpretation of secular trends depends on to-what-extent instrumental artifacts mimic these time-series structures.  In Kepler/K2, for example, spurious secular trends can exist at the few percent level as point spread functions leak out of pre-defined aperture masks due to spacecraft-induced image motion, thermal effects, and other instrumental systematic effects.  Increasing aperture size can sometimes, partially mitigate these biases at the expense of greater variance and read noise.  The characteristic timescales of these instrumental biases tend to resemble the observing season- either campaigns for K2, or quarters for Kepler prime.  Disk-free young stars exhibit bona fide secular trends of up to half a magnitude over periods of years-decades based on decades of ground-based photometric monitoring \citep{grankin08}.
+
+In this paper we propose a practical compromise. We determine peak-normalized, peak-to-valley sinuoidal amplitudes at the rotation timescale from high-precision space-based time-series observations, conservatively deeming any secular trends as spurious.  We additionally determine a \emph{global} peak-normalized, peak-to-valley amplitude by analyzing archival ground based photometry spanning decades (\emph{c.f.} Section \ref{sec:archival_phot}).  This strategy resembles that adopted by \citet{2017ApJ...851..116M}, which interpreted variations in Kepler Full-Frame Images as activity cycles.
+
+We measure sinusoidal amplitudes and spurious trends simultaneously with a phenomenological forward-modeling procedure that fits a sum of a sine wave and a polynomial of order $N_{\rm poly}$.  We determine the period $P$ of the sine wave from the multiterm Lomb-Scargle periodogram \citep{ivezic14}.  The linear model can then be solved analytically for the coefficients of the polynomial terms and the sine and cosine terms with linear least squares.  For clarity, fitting a straight line trend equates to a first order polynomial, $N_{\rm poly}=1$:
+
+
+\begin{equation}
+\hat f = c_0 + c_1 \cdot t + c_2 \cdot \sin{\frac{2\pi t}{P}} + c_3 \cdot \cos{\frac{2\pi t}{P}}
+\end{equation}
+
+A simple sine wave may not faithfully capture more complex oscillatory behavior, like piecewide flat-topped or sawtooth patterns.  We allow even more model flexibility by adding higher-order harmonic structures in a Fourier Series \citep{vanderplas15a} truncated to the first $N_{\rm Fourier}$ components:
+
+\begin{equation}
+  \begin{split}
+ \hat f  & =  \sum_{i=0}^{N_{\rm poly}} c_i \cdot t^i \\
+         & + \sum_{j=1}^{N_{\rm Fourier}} \Big( a_j \cdot \sin{\frac{2\pi j t}{P}} \\
+         & + b_j \cdot \cos{\frac{2\pi j t}{P}} \Big)
+\end{split}
+\end{equation}
+
+Our phenomenological forward model has a total of $N_{\rm poly}+2 \cdot N_{\rm Fourier}$ model parameters, representing the model complexity.  We set these numbers $N_{\rm poly}, N_{\rm Fourier}$ through a cross-validation procedure that balances the bias-variance tradeoff.  Once we have our model parameters in-hand, we overplot the observed lightcurve with a densely-sampled phenomenological model, examining the residuals for any additional noise structures, such as exoplanets or flares, which are masked and we iteratively re-compute the refined predicted flux time series.  We discard the nonzero ($i>0$) polynomial terms, yielding a constant plus harmonic model, which is then peak-normalized and deemed the trend-free stellar lightcurve $\hat f_{\rm \star}(t)$.  The detrended stellar amplitude is then: $$ A = 1 - \min{f_{\rm \star}(t)}$$
 
 
 
@@ -104,7 +130,7 @@ The right-most illustration depicts a high-latitude active longitude in which th
 
 V827 Tau was observed on the Immersion Grating Infrared Spectrograph \citep[IGRINS]{park14} at the 2.7~m Harlan J. Smith Telescope at McDonald Observatory on 2014-11-21 at 05:23 UTC by observers SK Park, H Kim, JJ Lee.  The data were reduced with the Pipeline Package \citep{jaejoonlee15}.
 
-\subsection{Photometric monitoring}
+\subsection{Long-term ground-based photometric monitoring} \label{sec:archival_phot}
 
 We compiled many sources of publicly available $V-$band photometry datapoints including 236 from \citep{grankin08}, 552 from ASAS3 \citep{pojmanski04}, 473 from the AAVSO archive \citep{kafka16}, and 306 unpublished data points from the ASAS-SN survey \citep{shappee14}.  We spot-checked the diverse sources of photometry finding consistency in estimated flux levels when acquired near-contemporaneously.Figure \ref{fig:PhotTime} shows the compilation of all available photometry on V827 Tau.  Figure \ref{fig:PhotStamps} shows a zoom-in postage stamp on each season, phase folded with a period $P=3.75837$ days.
 
@@ -122,6 +148,7 @@ We compiled many sources of publicly available $V-$band photometry datapoints in
  \label{fig:PhotStamps}
 \end{figure*}
 
+\subsection{K2 photometric monitoring} \label{sec:K2_obs}
 
 We retrieved K2 Campaign 13 (C13) \cite{2014PASP..126..398H} lightcurves for V827 Tau, possessing EPIC ID 210698281.
 

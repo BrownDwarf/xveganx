@@ -6,16 +6,16 @@
 	- [ ] Recent theoretical advances
 	- [x] Layout of this paper
 - **Methods**
-	- [ ] Our limited understanding of starspot properties, observational biases (ref `Table A1`)
+	- [x] Our limited understanding of starspot properties, observational biases
+		- [x] Need for assuming temperature distribution
+		- [x] Need to assume "starspot-dominated" or "faculae dominated"
+		- [x] Intro: limitations of "lightcurve inversions", cite (Basri, Roettenbacher)
 	- [ ] Interpreting lightcurves
-		- [ ] Intro: limitations of "lightcurve inversions", cite (Basri, Roettenbacher)
-		- [ ] Need for assuming temperature distribution
 		- [x] Simplest Possible Analytic Starspot Model (SPASM)
-		- [ ] Pathologically Asymmetric Two-temperature Hemispheres Equator-on Model (PADOTHEM)
-		- [ ] Pole-on star with Any Starspot Distribution Model (PSASDM)
-		- [ ] Need to assume "starspot-dominated" or "faculae dominated"
-		- [ ] Practical considerations for monochromatic lightcurves-- fitting amplitude and (in the case of Kepler/K2) possibility of spurious secular trends.  
-		- [ ] Multi-term Lomb-Scargle and Fourier reconstruction
+		- [x] Pathologically Asymmetric Two-temperature Hemispheres Equator-on Model (PADOTHEM)
+		- [x] Pole-on star with Any Starspot Distribution Model (PSASDM)
+		- [ ] *optional* Practical considerations for monochromatic lightcurves-- fitting amplitude and (in the case of Kepler/K2) possibility of spurious secular trends.  
+		- [ ] *optional* Multi-term Lomb-Scargle and Fourier reconstruction
 		- [ ] `Equation` Fourier reconstruction with linear coefficients + cross-validation
 		- [ ] `figure:` Cartoon of starspot
 	- [ ] Spectroscopy
