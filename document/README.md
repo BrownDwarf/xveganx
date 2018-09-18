@@ -14,10 +14,10 @@
 		- [x] Simplest Possible Analytic Starspot Model (SPASM)
 		- [x] Pathologically Asymmetric Two-temperature Hemispheres Equator-on Model (PADOTHEM)
 		- [x] Pole-on star with Any Starspot Distribution Model (PSASDM)
-		- [ ] *optional* Practical considerations for monochromatic lightcurves-- fitting amplitude and (in the case of Kepler/K2) possibility of spurious secular trends.  
-		- [ ] *optional* Multi-term Lomb-Scargle and Fourier reconstruction
-		- [ ] `Equation` Fourier reconstruction with linear coefficients + cross-validation
-		- [ ] `figure:` Cartoon of starspot
+		- [x] *optional* Practical considerations for monochromatic lightcurves-- fitting amplitude and (in the case of Kepler/K2) possibility of spurious secular trends.  
+		- [x] *optional* Multi-term Lomb-Scargle and Fourier reconstruction
+		- [x] `Equation` Fourier reconstruction with linear coefficients + cross-validation
+		- [x] `figure:` Cartoon of starspot
 	- [ ] Spectroscopy
 		- [ ] Improved accuracy over Gully-Santiago et al. 2017
 		- [ ] Philosophy: measurement versus detection
