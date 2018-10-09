@@ -74,7 +74,7 @@ This paper focuses on methodologies applicable to disk-free, accretion-free rota
 \subsection{Limiting cases for interpreting monochromatic lightcurves}
 The appearance and disappearance of starspots onto the unresolved hemisphere of a rotating star results in familiar rotationally-modulated stellar lightcurves.  Monochromatic lightcurves cannot be inverted unambiguously to yield a mapping of surface structures.  Young stellar lightcurves rarely show flat-topped lightcurves indicative of a single starspot.  Instead, most Kepler/K2 lightcurves of disk-free, accretion-free rotating young stars look like sine waves, or mixtures of sine waves.  The sine wave periods offer a simple interpretation-- the rotation period of the star if solid body rotation is assumed, or the rotation period evaluated at the latitude of the dominant starspot group in the case of differential rotation.  The sine wave amplitudes encode partial information about the starspot \emph{size} and temperature contrast to the ambient photosphere.  Unambiguously interpreting the absolute starspot \emph{size} and temperature from monochromatic lightcurve amplitudes requires additional geometric assumptions on the number, size, lifetimes, latitudinal and longitudinal distributions, and clustering properties of spots.  Observations of these quantities exists only for the sun, so their adoption lacks justification in anything but solar analogs.  Figure \ref{fig:cartoon} illustrates four examples of disparate stellar surface morphologies that possess comparable or identical photometric amplitudes and periods.
 
-The first scenario illustrates a solitary non-emitting (i.e. zero Kelvin) starspot near the equator of a modestly inclined star.  Ignoring limb darkening, the peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to the areal filling factor of the starspot.
+The first scenario illustrates a solitary non-emitting (i.e. zero Kelvin) starspot near the equator of a modestly inclined star.  We refer to this scenario as the Simplest Possible Analytic Starspot Model (SPASM).  Briefly, the SPASM interprets the lightcurve minimum as arising from a single, non-emitting, equatorial starspot on an edge-on star, and interprets the lightcurve maximum as \emph{spot-free}, that is, entirely devoid of starspots.  With these admittedly extreme assumptions, the flux minimum $F_{min}$ of a peak-normalized lightcurve is exactly equal to the starspot areal surface coverage fraction, $f_{\mathrm{spot}}$, ignoring limb darkening.
 
 The second scenario is pathological, but informative.  Consider an equator-on star in which one entire hemisphere (e.g. Eastern Hemisphere) possesses an isothermal photosphere, and the diametrically opposed hemisphere (e.g. Western Hemisphere) possess a cooler isothermal temperature.  The cooler hemisphere represents the lightcurve minimum, in which the observer receives less band-averaged flux simply because $T^4$ is smaller.  No known physical process is capable of delivering such a pathological structure, but nevertheless the temperature difference between the two hemispheres represents the minimum possible temperature contrast of a starspot, assuming the spots are isothermal.  The peak-normalized, peak-to-valley amplitude of of the lightcurve is equal to:
 
@@ -85,14 +85,14 @@ The second scenario is pathological, but informative.  Consider an equator-on st
 
 where $f_{\rm cool}$ and $f_{\rm ambient}$ refer to the flux of the photospheres for the cooler and hotter hemispheres respectively, and the integration includes the wavelength-dependent instrumental response.
 
-The third illustration depicts another pathological geometry: the \emph{pole-on} star has a starspot that grows and shrinks cyclicly with a period $P \neq P_{\rm rot}$.  In this scenario, the rotation period is likely to be mis-identified.  The lightcurve amplitude depends on the size and temperature contrast of the spot.
+%The third illustration depicts another pathological geometry: the \emph{pole-on} star has a starspot that grows and shrinks cyclicly with a period $P \neq P_{\rm rot}$.  In this scenario, the rotation period is likely to be mis-identified.  The lightcurve amplitude depends on the size and temperature contrast of the spot.
 
-The right-most illustration depicts a high-latitude active longitude in which the starspot is always visible from the observers perspective, but rotational modulation geometrically forshortens the perceived solid angle of the spot owing to projection effects, and limb darkening.  The amplitude of the lightcurve depends sensitively on the inclination of the star, the latitude of the spot, the wavelength-dependent limb darkening, the waveband of the observation, the temperature constrast of the spot, and the size of the spot.
+%The right-most illustration depicts a high-latitude active longitude in which the starspot is always visible from the observers perspective, but rotational modulation geometrically forshortens the perceived solid angle of the spot owing to projection effects, and limb darkening.  The amplitude of the lightcurve depends sensitively on the inclination of the star, the latitude of the spot, the wavelength-dependent limb darkening, the waveband of the observation, the temperature constrast of the spot, and the size of the spot.
 
 
 \begin{figure*}
  \centering
- \includegraphics[width=0.98\textwidth, trim={0 5cm 0 4cm},clip]{figures/cartoon_illustration.pdf}
+ \includegraphics[width=0.58\textwidth, trim={0 5cm 16cm 4cm},clip]{figures/cartoon_illustration.pdf}
  \caption{Cartoon illustration of stars possessing different inclinations, starspot geometries, and positions, yet possessing the same lightcurve morphologies.}
  \label{fig:cartoon}
 \end{figure*}
@@ -112,7 +112,7 @@ We measure sinusoidal amplitudes and spurious trends simultaneously with a pheno
 
 A simple sine wave may not faithfully capture more complex oscillatory behavior, like piecewide flat-topped or sawtooth patterns.  We allow even more model flexibility by adding higher-order harmonic structures in a Fourier Series \citep{vanderplas15a} truncated to the first $N_{\rm Fourier}$ components:
 
-\begin{equation}
+\begin{equation} \label{eqn:Fourier}
   \begin{split}
  \hat f  & =  \sum_{i=0}^{N_{\rm poly}} c_i \cdot t^i \\
          & + \sum_{j=1}^{N_{\rm Fourier}} \Big( a_j \cdot \sin{\frac{2\pi j t}{P}} \\
@@ -135,7 +135,7 @@ The likelihood-based Bayesian inference framework \texttt{Starfish} is for evalu
   \item The two components share the same surface gravity and metallicity.
 \end{itemize}
 
-The inference framework provides a \emph{measurement} of the temperatures and projected filling factor of the two components.  The inference framework makes no effort to conduct \emph{model comparison}--- whether two temperature components are really needed over one, for example, or whether-or-not three components are warranted to capture additional, unexplained variance.  Nor does the framework conduct \emph{detection} of starspots-- detection has usually already been established by the high precision photometric time series observations that reveal conspicuous undulations indicative of distinct surface structures with distinct emergent photospheres.  We know the spots are there.  We simply aim to quantify the first moment of their physical properties-- the average coverage fractions, and the characteristic temperatures.
+The inference framework provides a \emph{measurement} of the temperatures and projected filling factor of the two components.  The inference framework makes no effort to conduct \emph{model comparison}--- whether three components are warranted to capture additional, unexplained variance.  Nor does the framework conduct \emph{detection} of starspots-- detection has already been established by the high precision photometric time series observations that reveal conspicuous undulations indicative of distinct surface structures with distinct emergent photospheres.  Simply put, lightcurves detect spots, spectra measure the spot properties.  Our measurement technique aims to quantify the \emph{first moment} in an ostensibly more complex distribution-- the average coverage fractions, and the characteristic temperatures.
 
 
 
@@ -147,7 +147,7 @@ V827 Tau was observed on the Immersion Grating Infrared Spectrograph \citep[IGRI
 
 \subsection{Long-term ground-based photometric monitoring} \label{sec:archival_phot}
 
-We compiled many sources of publicly available $V-$band photometry datapoints including 236 from \citep{grankin08}, 552 from ASAS3 \citep{pojmanski04}, 473 from the AAVSO archive \citep{kafka16}, and 306 unpublished data points from the ASAS-SN survey \citep{shappee14}.  We spot-checked the diverse sources of photometry finding consistency in estimated flux levels when acquired near-contemporaneously.Figure \ref{fig:PhotTime} shows the compilation of all available photometry on V827 Tau.  Figure \ref{fig:PhotStamps} shows a zoom-in postage stamp on each season, phase folded with a period $P=3.75837$ days.
+We compiled many sources of publicly available $V-$band photometry datapoints including 236 from \citep{grankin08}, 552 from ASAS3 \citep{pojmanski04}, 473 from the AAVSO archive \citep{kafka16}, and 306 unpublished data points from the ASAS-SN survey \citep{shappee14}.  We spot-checked the diverse sources of photometry finding consistency in estimated flux levels when acquired near-contemporaneously. Figure \ref{fig:PhotTime} shows the compilation of all available photometry on V827 Tau.  Figure \ref{fig:PhotStamps} shows a zoom-in postage stamp on each season, phase folded with a period $P=3.75837$ days.
 
 \begin{figure*}
  \centering
@@ -171,7 +171,7 @@ We retrieved K2 Campaign 13 (C13) \cite{2014PASP..126..398H} lightcurves for V82
 
 \section{Analysis}\label{sec:Analysis}
 %Multiterm Lomb-Scargle periodograms \citep{ivezic14}, and Fourier series truncated to the first $\sim 4$ components]{vanderplas15a}.
- We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14}, and Fourier series truncated to the first $\sim 4$ components \citep{vanderplas15a} on the K2 C13 lightcurve, yielding a 3.7584 day period.  We then fit a second order polynomial plus sine-and-cosine model with linear least squares.  The periodic minimum K2 flux corresponds to a flux decrement of 23.5\% from its maximum.  Figure \ref{fig:V827TauK2} shows the lightcurve overplotted with the sinusoidal model.
+ We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14} truncated to the first $\sim 4$ components \citep{vanderplas15a} on the K2 C13 lightcurve, yielding a 3.7584 day period.  We then fit a second order polynomial plus sine-and-cosine model (\emph{c.f} Eq. \ref{eqn:Fourier}) with linear least squares.  The periodic minimum K2 flux corresponds to a flux decrement of 23.5\% from its maximum.  Figure \ref{fig:V827TauK2} shows the lightcurve overplotted with the sinusoidal model.
 
  \begin{figure*}
  \centering
@@ -180,19 +180,27 @@ We retrieved K2 Campaign 13 (C13) \cite{2014PASP..126..398H} lightcurves for V82
  \label{fig:V827TauK2}
 \end{figure*}
 
-We derived starspot temperatures and areal filling factors from IGRINS $H-$band spectra using the inference framework \texttt{Starfish} \citep{czekala15}, as extended by \citet{2017ApJ...836..200G}.  We ran 5000 samples with 40 \texttt{emcee} walkers \citep{foreman13}, with manual spot-checking of convergence.  We find typical filling factors around $f_\mathrm{spot} \sim 75\%$ and temperatures $T_\mathrm{spot} \sim 2600$ K.
+We derived starspot temperatures and areal filling factors from IGRINS $H-$band spectra applying \texttt{Starfish} separately for each spectral order.  We ran 5000 samples with 40 \texttt{emcee} walkers \citep{foreman13}, with manual spot-checking of convergence.  We find typical filling factors around $f_\mathrm{spot} \sim 75\%$ and temperatures $T_\mathrm{spot} \sim 2600$ K.
 
-We observed reasonably good agreedment when we overplotted our model prediction spectra with the data.  We do not expect the models to be perfect, due to known model mis-specifications such as imperfect line lists and un-modeled magnetic Zeeman broadening, to name a few.
+We observed reasonably good agreement when we overplotted our model prediction spectra with the data.  We do not expect the models to be perfect, due to known model mis-specifications such as imperfect line lists and un-modeled magnetic Zeeman broadening, to name a few.  Figure \ref{fig:IGRINS-spectra} shows observed IGRINS spectra with a single draw from the probabilistic spectral decompositions from Starfish.  The probabilistic nature of the decomposition method means that a range of filling factors and hot-and-cool temperatures are consistent with the data.  The suite of conceivable spectral decompositions is not shown for clarity-- we do not prescribe that the decompositions shown represent the ``best fit'' or ``optimal'' ones, simply a draw with a ``middle-of-the-road'' filling factor estimate.  The emcee-adapted Starfish framework samples each spectral order independently, and therefore allows each order to have its own, potentially discordant posterior for each chunk of spectrum.  Any single spectral order's parameters may ostensibly seem in discord with an adjacent spectral order.  In practice, the probabilistic spread of filling factors and temperatures usually means that there exists some combination of parameters that is consistent with almost all of the spectral orders.
 
-The archival and K2 lightcurves constrain the minimum possible starspot coverage, assuming the Simplest Possible Analytic Starspot Model (SPASM).  Briefly, the SPASM interprets the lightcurve minimum as arising from a single, non-emitting, equatorial starspot on an edge-on star, and interprets the lightcurve maximum as \emph{spot-free}, that is, entirely devoid of starspots.  With these admittedly extreme assumptions, the flux minimum $F_{min}$ is exactly equal to the starspot areal surface coverage fraction, $f_{\mathrm{spot}}$.  The SPASM can be applied to a single season, such that there always exists a spot-free hemisphere, or can be applied to a global, long-term photometric dataset such as the one we have assembled for V827 Tau.  The global maximum flux for V827 Tau occurred on September 21, 1990, with $V=12.242$.Since then, the flux has faded 40\% to a median $V-$band magnitude of 12.63 in the 2016-2017 season.  The IGRINS spectrum was coincidentally acquired at the minimum of the rotationally modulated flux lightcurve, which corresponds to a global $F_{min} = f_{\mathrm{spot, min}} = 50\%$.
+Some outlier spectral orders exhibit posterior clusters far away from any of the other spectral orders.  These outlier spectral orders may stem from either poor synthetic spectral models, violated assumptions, or bona-fide detections of probing deeper into the photosphere due (ref Berdyugina 20xx).
 
-Figure \ref{} plots the constraints of starspot filling factor versus starspot temperature.  The burned-in MCMC draws from the posterior probability density distribution inferred from IGRINS spectra aggregated for all spectral orders are overplotted as a 2D-histogram.
+\begin{figure*}
+\centering
+\includegraphics[width=0.98\textwidth]{figures/H_band_spectra_3x6.pdf}
+\caption{Observed IGRINS spectra (thick stepped gray line) for 15 spectral orders $m$,  overplotted with a composite spectrum (thin purple line) composed from Starfish-derived stellar posterior parameters; the shown parameters possess the median filling factor of the burned-in MCMC samples.  The faint dotted blue line shows the hot $T_h$ photospheric component of the spectral decomposition, while the thick red line shows the cool $T_c$ component.  The sum of the red and blue lines is the purple line.  \label{fig:IGRINS-spectra}}
+\end{figure*}
 
- \begin{figure*}
- \centering
- \includegraphics[width=0.98\textwidth]{figures/V827_Tau_Starfish_results.pdf}
- \caption{Results of Starfish-based inference of starspot filling factor and temperature for 22 IGRINS $H-$band orders.  The size of the points is proportional to the strength of the posterior constraint on $f_{\rm spot}$ for each order.}
- \label{fig:V827TauStarfish}
+The archival and K2 lightcurves constrain the minimum possible starspot coverage as described in the Methods Section.  The SPASM can be applied to a single season, such that there always exists a spot-free hemisphere, or can be applied to a global, long-term photometric dataset such as the one we have assembled for V827 Tau.  The global maximum flux for V827 Tau occurred on September 21, 1990, with $V=12.242$.Since then, the flux has faded 40\% to a median $V-$band magnitude of 12.63 in the 2016-2017 season.  The IGRINS spectrum was coincidentally acquired at the minimum of the rotationally modulated flux lightcurve, which corresponds to a global $F_{min} = f_{\mathrm{spot, min}} = 50\%$.
+
+Figure \ref{} plots the constraints of starspot filling factor versus starspot temperature.  The median and $5^{th}$ and $95^th$ percentiles of the MCMC samples are shown.
+
+\begin{figure*}
+\centering
+  \includegraphics[width=0.98\textwidth]{figures/V827_Tau_Starfish_results.pdf}
+  \caption{Results of Starfish-based inference of starspot filling factor and temperature for 22 IGRINS $H-$band orders.  The size of the points is proportional to the strength of the posterior constraint on $f_{\rm spot}$ for each order.}
+\label{fig:V827TauStarfish}
 \end{figure*}
 
 \section{Conclusions}
