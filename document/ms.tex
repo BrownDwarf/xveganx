@@ -124,7 +124,7 @@ Our phenomenological forward model has a total of $N_{\rm poly}+2 \cdot N_{\rm F
 
 \subsection{Two-temperature spectral inference framework}
 
-We employ the \texttt{Starfish}\footnote{Forked from the original (\href{https://github.com/iancze/Starfish}) at https://github.com/gully/Starfish} \citep{czekala15} spectral inference framework, as adapted from  by \citet{2017ApJ...836..200G}.  The \texttt{Starfish} framework builds a forward-model of the observed spectrum based spectrally emulated pre-computed synthetic model grid spectra.  We employed the PHOENIX synthetic model with an updated version of \texttt{Starfish} that maintains the native absolute fluxes from \citet{husser13}, rather than the inaccurate interpolation introduced in the Appendix of \citet{2017ApJ...836..200G}.
+We employ the \texttt{Starfish}\footnote{Forked from the original \url{https://github.com/iancze/Starfish} at \url{https://github.com/gully/Starfish}} \citep{czekala15} spectral inference framework, as adapted from  by \citet{2017ApJ...836..200G}.  The \texttt{Starfish} framework builds a forward-model of the observed spectrum based spectrally emulated pre-computed synthetic model grid spectra.  We employed the PHOENIX synthetic model with an updated version of \texttt{Starfish} that maintains the native absolute fluxes from \citet{husser13}, rather than the inaccurate interpolation introduced in the Appendix of \citet{2017ApJ...836..200G}.
 
 The likelihood-based Bayesian inference framework \texttt{Starfish} is for evaluating the posterior probability of parameters given an observed spectrum, \emph{assuming the model is correct}.  The model assumptions are:
 
@@ -165,15 +165,30 @@ We compiled many sources of publicly available $V-$band photometry datapoints in
 
 \subsection{K2 photometric monitoring} \label{sec:K2_obs}
 
-We retrieved K2 Campaign 13 (C13) \cite{2014PASP..126..398H} lightcurves for V827 Tau, possessing EPIC ID 210698281.
+We retrieved the K2 Campaign 13 (C13) \cite{2014PASP..126..398H} long cadence (30 minute cadence) Target Pixel File for EPIC ID 210698281 (V827 Tau) from the Mikulksi Archive for Space Telescopes (MAST).  Observations of this target were requested in 9 distinct Guest Observer proposals: GO13117 (PI Cody), GO13123 (PI Stello), GO13009 (PI Rizzuto), GO13016 (PI Gaidos), GO13002 (PI Prsa), GO13086 (PI Boyd), GO13119 (PI Johns-Krull), GO13070 (PI Plachy), GO13118 (PI Stringfellow).  Proposal GO13070 selected this target based on its appearance as a Cepheid variable star, possibly based on its unusually large amplitude of photometric variability.
+
+\subsection{Gaia DR2 and kinematics} \label{sec:GaiaDR2}
+
+V827 Tau appears in Gaia DR2 \citep{2016A&A...595A...1G, 2018A&A...616A...1G} as source 3314338163954491136, with a parallax of $6.1432 \pm 0.351 $ milliarcseconds, and proper motions in RA and dec of $9.55 \pm 0.72, -13.406 \pm 0.473$ respectively. Individual photometric epochs were not available for this star. \citet{nguyen12} report a radial velocity (RV) of V827 Tau of $17.77 \pm 0.05 (stat) \pm 1.9 (sys) $ km/s based on four measurement epochs with the Magellan Inamori Kyocera Echelle (MIKE, \citet{2003SPIE.4841.1694B}).
+
+\subsection{High Spatial Resolution Imaging} \label{sec:imaging}
+We spot-checked a few sources of high-spatial resolution imaging to probe the prospect of binarity for V827 Tau.
+
 
 %We retrieved 2MASS photometry \citep{skrutskie06}.
 
 \section{Analysis}\label{sec:Analysis}
 %Multiterm Lomb-Scargle periodograms \citep{ivezic14}, and Fourier series truncated to the first $\sim 4$ components]{vanderplas15a}.
- We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14} truncated to the first $\sim 4$ components \citep{vanderplas15a} on the K2 C13 lightcurve, yielding a 3.7584 day period.  We then fit a second order polynomial plus sine-and-cosine model (\emph{c.f} Eq. \ref{eqn:Fourier}) with linear least squares.  The periodic minimum K2 flux corresponds to a flux decrement of 23.5\% from its maximum.  Figure \ref{fig:V827TauK2} shows the lightcurve overplotted with the sinusoidal model.
 
- \begin{figure*}
+\subsection{Kinematics and cluster membership}
+The GaiaDR2 positional and MIKE RV data provide constraints on membership to the Taurus cluster.  We computed the probability of membership to the field and the Taurus star forming region using the Banyan $\Sigma$ probabilistic cluster membership framework \footnote{Banyan $\Sigma$: webtool \url{http://www.exoplanetes.umontreal.ca/banyan/banyansigma.php}, with source code at \url{https://github.com/jgagneastro/banyan_sigma}} \citep{2018ApJ...856...23G}.  We found an $84.1\%$ probability of Taurus membership, and a $15.9\%$ chance of field membership.
+
+\subsection{K2 data analysis}
+We assembled the K2 C13 lightcurve using the \texttt{lightkurve} package\footnote{\url{http://lightkurve.keplerscience.org/}}.  We computed custom simple aperture photometry using all telemetered pixels in the postage stamp window.  This generous aperture choice reduces motion-induced systematic trends attributable to flux spilling outside of the pre-defined Kepler pipeline aperture.  No custom background subbtraction was applied.
+
+We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14} truncated to the first $4$ components \citep{vanderplas15a} on the K2 C13 lightcurve, yielding a 3.7584 day period, deemed the rotation period of the star.  Parenthetically, a unique rotation period is ill-defined in the presence of differential rotation, so instead we think of this number as the rotation rate evaluated at the---unknown, possibly dynamic---latitude of the dominant spot or spot group.  We then fit a second order polynomial plus sine-and-cosine model (\emph{c.f} Eq. \ref{eqn:Fourier}) with linear least squares.  The periodic minimum K2 flux corresponds to a flux decrement of 23.5\% from its maximum.  Figure \ref{fig:V827TauK2} shows the lightcurve overplotted with the sinusoidal model.
+
+\begin{figure*}
  \centering
  \includegraphics[width=0.98\textwidth]{figures/V827_Tau_K2C13_lightcurve.pdf}
  \caption{K2 C13 lightcurve of V827 Tau with a polynomial and sinusoidal model overplotted.  A few flares are perceptible.}
@@ -228,6 +243,13 @@ This paper includes data collected by the Kepler mission. Funding for the Kepler
 
 % MAST
 Some/all of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555.
+
+This work has made use of data from the European Space Agency (ESA) mission
+{\it Gaia} (\url{https://www.cosmos.esa.int/gaia}), processed by the {\it Gaia}
+Data Processing and Analysis Consortium (DPAC,
+\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC
+has been provided by national institutions, in particular the institutions
+participating in the {\it Gaia} Multilateral Agreement.
 
 
 {\it Facilities:} \facility{Smith (IGRINS)}, \facility{AAVSO}, \facility{CFHT (ESPaDOnS)}, \facility{INTEGRAL (OMC)}, \facility{ASAS}, \facility{CrAO:1.25m}, \facility{ARC (TripleSpec)}, \facility{Hale (DBSP)}, \facility{Gaia}

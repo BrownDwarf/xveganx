@@ -18,16 +18,18 @@
 		- [x] *optional* Multi-term Lomb-Scargle and Fourier reconstruction
 		- [x] `Equation` Fourier reconstruction with linear coefficients + cross-validation
 		- [x] `figure:` Cartoon of starspot
-	- [ ] Spectroscopy
-		- [ ] Improved accuracy over Gully-Santiago et al. 2017
-		- [ ] Philosophy: measurement versus detection
+	- [x] Spectroscopy
+		- [x] Improved accuracy over Gully-Santiago et al. 2017
+		- [x] Philosophy: measurement versus detection
 - **Observations and data reduction**
 	- [x] IGRINS observations
 	- [x] Ground-based photometric monitoring
-	- [ ] K2 data, add in proposal IDs
-	- [ ] *bonus* High resolution imaging to constrain multiplicity status?
-	- [ ] *bonus* Gaia data -- polychromatic photometry? Distance? goodness-of-fit metric / binarity?
+	- [x] K2 data, add in proposal IDs
+	- [x] Gaia data -- polychromatic photometry? Distance? goodness-of-fit metric /
+	- [ ] High resolution imaging to measure multiplicity:
+		- [ ] Kraus et al. 2011 see stellar companion at 90 mas, delta Ks =  0.58
 - **Analysis**
+	- [x] Gaia
 	- [x] K2 data
 		- [x] Aperture selection, intercomparison of detrending techniques
 	- [ ] Archival V-band photometry
@@ -63,6 +65,8 @@
 	- [ ] Where does V827 Tau sit in a new HR diagram? (new Somers models)
 		- [ ] *bonus* `figure:` PMS HR diagram with new Somers tracks
 - **Appendix**
-	- [ ] *optional* `Table A1` of starspot characterization methods
 	- [ ] *bonus* K2 Detection of flares
-	- [ ] *bonus* K2 planet search-- transit / reflected light hot-Jupiter?
+	- [ ] *bonus* Radial velocity variations of V827 Tau
+		- [ ] Crockett et al. 2012 -- CSHELL optical + IR
+		- [ ] Nguyen et al. 2012 -- MIKE optical 4 epochs
+		- [ ] Massarotti et al. 2005 -- TRES + MMT optical 21 epochs 12+ years
