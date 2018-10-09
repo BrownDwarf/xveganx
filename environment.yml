@@ -1,0 +1,31 @@
+name: xveganx
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.6
+  - numpy>=1.11
+  - scipy>=0.19.0
+  - matplotlib>=1.5.3
+  - astropy>=1.3
+  - astroquery>=0.3.7 # from conda-forge
+  - beautifulsoup4
+  - requests
+  - tqdm
+  - lightkurve # from conda-forge
+  - pandas
+  - oktopus # from conda-forge channel
+  - bokeh # optional
+  - jupyter
+  - ipython
+  - astroml
+  - cython
+  - scikit-learn
+  - scikit-image
+  - h5py
+  - pip
+  - pip:
+    - gatspy
+    - makecite
+    - corner
+    - pyia
