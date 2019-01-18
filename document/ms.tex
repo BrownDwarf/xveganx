@@ -1,5 +1,5 @@
 %\documentclass[iop,revtex4]{emulateapj}% change onecolumn to iop for fancy, iop to twocolumn for manuscript
-\documentclass[twocolumn]{emulateapj}% change onecolumn to iop for fancy, iop to onecolumn for manuscript
+\documentclass[revtex4]{emulateapj}% change onecolumn to iop for fancy, iop to onecolumn for manuscript
 %\documentclass[12pt,preprint]{aastex}
 
 %\usepackage{lineno}
@@ -25,7 +25,7 @@
 
 \slugcomment{In preparation}
 
-\shorttitle{Extreme Starspots in Taurus}
+\shorttitle{V827 Tau starspots with K2 and IGRINS}
 
 \shortauthors{Gully-Santiago et al.}
 
@@ -33,7 +33,7 @@
 
 \begin{document}
 
-\title{The coverage fraction of starspots on young Taurus members and consequences for stellar ages estimates at 1$-$10 Myr}
+\title{The coverage fraction of starspots on V827 Tau and consequences for stellar ages estimates at 1$-$10 Myr}
 
 \author{Michael A. Gully-Santiago,\altaffilmark{1}, author list TBD}
 
@@ -42,7 +42,7 @@
 
 \begin{abstract}
 
-We assess starspot temperatures and coverage fraction for three heavily spotted Taurus pre-main sequence young stellar objects from their high-resolution, high bandwidth near infrared IGRINS spectroscopy.  We forward model the spectra with a mixture of cool and hot photosphere components using the \texttt{Starfish} spectral inference framework.  The disk-free, non-accreting sample members have 10$-$30 years worth of polychomatic photometry, which we use in four ways: first, to register the acquisition time of the spectroscopic measurement to the stellar rotational phase; second, to derive the secular changes of areal coverage fraction over 1 to 30 year timescales; third, to derive rotation periods; and fourth, to assign lower-limits to areal filling factors based on the amplitude of photometric variation and limiting case of non-emitting equatorial spots.  We derive starspot temperatures in the range of $x$ to $y$ K, and filling factors of $v$ to $z$.  These filling factors are typically $k$ to $m$ times higher than the limiting case of non-emitting equatorial spots, implying that either the stars possess large circumpolar starspots with the stellar spin axis inclined moderately towards our reference frame, or that the stars possess three or more dominant temperature components, rendering our two-temperature retrieval process flawed.  The filling factors and temperatures cause effective temperature estimates to systematically decrease, confounding age and mass estimates of these young stars and by extension all previous spectral-type-based estimates of fundamental properties of heavily spotted stars, though more work is needed.  The observations of secularly varying photometric amplitudes are consistent with the physical interpretations that some or all young stars pass through short-lived phases of enhanced starspot coverage, or that starspots migrate from near the poles towards the equator over time.
+We assess starspot temperatures and coverage fraction for V827 Tau---a heavily spotted Taurus pre-main sequence young stellar object---based on its high-resolution, high bandwidth near infrared IGRINS spectroscopy.  We forward model the spectra with a mixture of cool and hot photosphere components using the \texttt{Starfish} spectral inference framework.  The disk-free, non-accreting V827 Tau has 30 years worth of polychomatic photometry, including Kepler/K2, ASASSN, and the ROTOR program.  We use the photometry in four ways: first, to register the acquisition time of the spectroscopic measurement to the stellar rotational phase; second, to derive the secular changes of areal coverage fraction over 1 to 30 year timescales; third, to derive rotation periods; and fourth, to assign lower-limits to areal filling factors based on the amplitude of photometric variation and limiting case of non-emitting equatorial spots.  We derive starspot temperatures $<3000$ K, compared to a 4100 K ambient photosphere, with filling factors of $60$ to $80\%$.  These filling factors are $\sim3$ times large than the limiting case of a solitary non-emitting equatorial spot, implying that the stars either possess longitudinal symmetries in the starspots surface distribution, and/or high latitude starspots moderately inclined towards the observer.  The filling factor and temperature cause effective temperature estimates to systematically decrease, confounding age and mass estimates of these young stars and by extension all previous spectral-type-based estimates of fundamental properties of heavily spotted stars, though more work is needed.  The observations of secularly varying photometric amplitudes are consistent with the physical interpretations that some or all young stars pass through short-lived phases of enhanced starspot coverage, or that starspots migrate from near the poles towards the equator over time.
 
 \end{abstract}
 
@@ -59,7 +59,7 @@ One observational manifestation of rotationally-heightened magnetic fields is th
 %Fill in more thereoy here
 \citet{somers15} emphasized the roll of starspots in inferring stellar ages.
 
-We first emphasize possible geometric degeneracies that can give rise to larger-than-expected starspots.  We then collate numerous photometric and spectroscopic data sources (Section XXX), and their starspot-centric analyses (Section XXX).  We combine inferences on our small sample of stars to assess the effect of starspots on the pre-main sequence HR-diagram (Section XXX).  Finally we question our initial assumptions in Section XXX.
+We first emphasize possible geometric degeneracies that can give rise to larger-than-expected starspots.  We then collate numerous photometric and spectroscopic data sources (Section \ref{sec:obs}), and their starspot-centric analyses (Section \ref{sec:Analysis}).  We combine inferences on our small sample of stars to assess the effect of starspots on the pre-main sequence HR-diagram (Section \ref{sec:Analysis}), and finally we revisit and question the assumptions of our analysis.
 
 \section{Methods}\label{sec:methods}
 
@@ -195,11 +195,12 @@ We performed a multiterm Lomb-Scargle periodogram \citep{ivezic14} truncated to 
  \label{fig:V827TauK2}
 \end{figure*}
 
+\subsection{Spectral inference}
 We derived starspot temperatures and areal filling factors from IGRINS $H-$band spectra applying \texttt{Starfish} separately for each spectral order.  We ran 5000 samples with 40 \texttt{emcee} walkers \citep{foreman13}, with manual spot-checking of convergence.  We find typical filling factors around $f_\mathrm{spot} \sim 75\%$ and temperatures $T_\mathrm{spot} \sim 2600$ K.
 
-We observed reasonably good agreement when we overplotted our model prediction spectra with the data.  We do not expect the models to be perfect, due to known model mis-specifications such as imperfect line lists and un-modeled magnetic Zeeman broadening, to name a few.  Figure \ref{fig:IGRINS-spectra} shows observed IGRINS spectra with a single draw from the probabilistic spectral decompositions from Starfish.  The probabilistic nature of the decomposition method means that a range of filling factors and hot-and-cool temperatures are consistent with the data.  The suite of conceivable spectral decompositions is not shown for clarity-- we do not prescribe that the decompositions shown represent the ``best fit'' or ``optimal'' ones, simply a draw with a ``middle-of-the-road'' filling factor estimate.  The emcee-adapted Starfish framework samples each spectral order independently, and therefore allows each order to have its own, potentially discordant posterior for each chunk of spectrum.  Any single spectral order's parameters may ostensibly seem in discord with an adjacent spectral order.  In practice, the probabilistic spread of filling factors and temperatures usually means that there exists some combination of parameters that is consistent with almost all of the spectral orders.
+We observed reasonably good agreement when we overplotted our model prediction spectra with the data.  We do not expect the models to be perfect, due to known model mis-specifications such as imperfect line lists and un-modeled magnetic Zeeman broadening, to name a few.  Figure \ref{fig:IGRINS-spectra} shows observed IGRINS spectra with a single draw from the probabilistic spectral decompositions from Starfish.  The probabilistic nature of the decomposition method means that a range of filling factors and hot-and-cool temperatures are consistent with the data.  The suite of conceivable spectral decompositions is not shown for clarity-- we do not prescribe that the decompositions shown represent the ``best fit'' or ``optimal'' ones, simply a draw with a probable filling factor estimate.  The emcee-adapted Starfish framework samples each spectral order independently, and therefore allows each order to have its own, potentially discordant posterior for each chunk of spectrum.  Any single spectral order's parameters may ostensibly seem in discord with an adjacent spectral order.  In practice, the probabilistic spread of filling factors and temperatures usually means that there exists some combination of parameters that is consistent with almost all of the spectral orders.
 
-Some outlier spectral orders exhibit posterior clusters far away from any of the other spectral orders.  These outlier spectral orders may stem from either poor synthetic spectral models, violated assumptions, or bona-fide detections of probing deeper into the photosphere due (ref Berdyugina 20xx).
+Some outlier spectral orders exhibit posterior clusters far away from any of the other spectral orders.  These outlier spectral orders may stem from either poor synthetic spectral models, violated assumptions, or bona-fide detections of probing to deeper into the photosphere and perceiving a smaller cross-section of spots than on the surface (M. Panja, priv. comm.).
 
 \begin{figure*}
 \centering
@@ -209,14 +210,19 @@ Some outlier spectral orders exhibit posterior clusters far away from any of the
 
 The archival and K2 lightcurves constrain the minimum possible starspot coverage as described in the Methods Section.  The SPASM can be applied to a single season, such that there always exists a spot-free hemisphere, or can be applied to a global, long-term photometric dataset such as the one we have assembled for V827 Tau.  The global maximum flux for V827 Tau occurred on September 21, 1990, with $V=12.242$.Since then, the flux has faded 40\% to a median $V-$band magnitude of 12.63 in the 2016-2017 season.  The IGRINS spectrum was coincidentally acquired at the minimum of the rotationally modulated flux lightcurve, which corresponds to a global $F_{min} = f_{\mathrm{spot, min}} = 50\%$.
 
-Figure \ref{} plots the constraints of starspot filling factor versus starspot temperature.  The median and $5^{th}$ and $95^th$ percentiles of the MCMC samples are shown.
+Figure \ref{fig:V827TauStarfish} plots the constraints of starspot filling factor versus starspot temperature.  The median and $5^{th}$ and $95^th$ percentiles of the MCMC samples are shown.
 
 \begin{figure*}
 \centering
-  \includegraphics[width=0.98\textwidth]{figures/V827_Tau_Starfish_results.pdf}
+  \includegraphics[width=0.5\textwidth]{figures/V827_Tau_Starfish_results.pdf}
   \caption{Results of Starfish-based inference of starspot filling factor and temperature for 22 IGRINS $H-$band orders.  The size of the points is proportional to the strength of the posterior constraint on $f_{\rm spot}$ for each order.}
 \label{fig:V827TauStarfish}
 \end{figure*}
+
+
+\section{Discussion}\label{sec:discussion}
+
+\emph{text}
 
 \section{Conclusions}
 
@@ -225,24 +231,16 @@ Reiteration here.
 \clearpage
 \pagebreak
 
-
-\appendix
-
-\section{Are starspots confusing?}
-\label{methods-details}
-
-Short answer: no!
-
 \acknowledgements
 
 %ADS
-We thank ADS!
+This work used the Immersion Grating Infrared Spectrograph (IGRINS) that was developed under a collaboration between the University of Texas at Austin and the Korea Astronomy and Space Science Institute (KASI) with the financial support of the US National Science Foundation under grant AST-1229522, of the University of Texas at Austin, and of the Korean GMT Project of KASI.  This research has made use of NASA's Astrophysics Data System.
 
-%Kepler
 This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission directorate.
 
-% MAST
-Some/all of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555.
+Some of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555.
+
+We acknowledge with thanks the variable star observations from the AAVSO International Database contributed by observers worldwide and used in this research.
 
 This work has made use of data from the European Space Agency (ESA) mission
 {\it Gaia} (\url{https://www.cosmos.esa.int/gaia}), processed by the {\it Gaia}
@@ -252,7 +250,7 @@ has been provided by national institutions, in particular the institutions
 participating in the {\it Gaia} Multilateral Agreement.
 
 
-{\it Facilities:} \facility{Smith (IGRINS)}, \facility{AAVSO}, \facility{CFHT (ESPaDOnS)}, \facility{INTEGRAL (OMC)}, \facility{ASAS}, \facility{CrAO:1.25m}, \facility{ARC (TripleSpec)}, \facility{Hale (DBSP)}, \facility{Gaia}
+{\it Facilities:} \facility{Smith (IGRINS)}, \facility{AAVSO}, \facility{CFHT (ESPaDOnS)}, \facility{INTEGRAL (OMC)}, \facility{ASAS}, \facility{CrAO:1.25m}, \facility{Gaia}
 
 {\it Software: }
  \project{pandas} \citep{mckinney10},
