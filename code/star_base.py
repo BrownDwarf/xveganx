@@ -11,7 +11,7 @@ from scipy.special import j1
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy.linalg import cho_factor, cho_solve
 from numpy.linalg import slogdet
-from astropy.analytic_functions import blackbody_lambda
+#from astropy.analytic_functions import blackbody_lambda
 from astropy import units as u
 import logging
 

@@ -15,6 +15,7 @@ parser.add_argument("--config", action='store_true', help="Use config file inste
 parser.add_argument("--static", action="store_true", help="Make a static figure of one draw")
 parser.add_argument("--animate", action="store_true", help="Make an animation of many draws from the two components.")
 parser.add_argument("--OG", action="store_true", help="The Original Gangster version, clunky and all.")
+parser.add_argument("--blitz", action="store_true", help="Take flux ratios of temps.")
 args = parser.parse_args()
 
 import os
@@ -206,7 +207,7 @@ def lnprob_all(p):
 
 draws = []
 
-if not args.config:
+if not (args.config or args.blitz):
     try:
         ws = np.load("emcee_chain.npy")
         burned = ws[:, -200:,:]
@@ -316,6 +317,44 @@ if args.config:
     df_out['model_hot50'] = lnprob_all(pset2)
 
     df_out.to_csv('spec_config.csv', index=False)
+
+# Compute the flux ratios for all temp combos
+if args.blitz:
+
+    kep_response = pd.read_csv(os.path.expandvars('$xveganx/data/K2/kepler_response_hires1.txt'),
+                           names=['wl_nm','trans'],
+                           skiprows=9, delim_whitespace=True)
+    kep_response['wl_ang'] = kep_response.wl_nm * 10.0
+    kep_response = kep_response[(kep_response.wl_ang > 4200) & (kep_response.wl_ang < 9200)]
+    kep_response['trans_norm'] = kep_response.trans / np.sum(kep_response.trans)
+    kep_response = kep_response.reset_index(drop=True)
+
+    df_out = pd.DataFrame()
+
+    with open('s0_o0phi.json') as f:
+        s0phi = json.load(f)
+
+    for T_spot in np.arange(2700, 3901, 50):
+
+        psl = (Starfish.config['Theta']['grid']+
+          [Starfish.config['Theta'][key] for key in ['vz', 'vsini', 'logOmega', 'teff2', 'logOmega2']] +
+          s0phi['cheb'] +
+          [s0phi['sigAmp']] + [s0phi['logAmp']] + [s0phi['l']])
+
+        ps = np.array(psl)
+        ps[6] = T_spot
+
+        pset1 = ps.copy()
+        pset1[5] = -20
+        model_cool = lnprob_all(pset1)
+        pset2 = ps.copy()
+        pset2[7] = -20
+        model_hot = lnprob_all(pset2)
+        flux_ratio = np.sum(model_cool / model_hot * kep_response.trans_norm.values)
+        df_out = df_out.append({'T_spot':T_spot, 'flux_ratio':flux_ratio},
+                                ignore_index=True)
+
+    df_out.to_csv('flux_ratios_vs_temp.csv', index=False)
 
 if args.static:
 

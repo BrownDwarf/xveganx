@@ -218,6 +218,7 @@ def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), sa
     for i in range(n_seasons):
         # get the data and best-fit angular frequency
         s = season_agg.season[i]
+        print(s)
         ids = master.season == s
         df = master[ids]
         t = df.JD_like.values
@@ -236,11 +237,14 @@ def plot_season_postage_stamps(master, season_agg, epochs, ylim=(13.7, 13.3), sa
             reg = 0.3 * np.ones(2 * Nterms + 1)
             reg[:3] = 0 # no regularization on low-order terms
 
-        modelV = LombScargle(Nterms=4, regularization=reg)
-        mask = y == y # We can mask flares later on
-        modelV.fit(t[mask], y[mask], dy[mask])
         tfit = np.linspace(0, this_P, 100)
-        yfitV = modelV.predict(tfit, period=this_P)
+        try:
+            modelV = LombScargle(Nterms=4, regularization=reg)
+            mask = y == y # We can mask flares later on
+            modelV.fit(t[mask], y[mask], dy[mask])
+            yfitV = modelV.predict(tfit, period=this_P)
+        except:
+            yfitV = np.nanmedian(y)*np.ones(len(tfit))
 
 
         # plot the phased data
