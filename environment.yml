@@ -23,6 +23,7 @@ dependencies:
   - scikit-learn
   - scikit-image
   - h5py
+  - seaborn
   - pip
   - pip:
     - gatspy
